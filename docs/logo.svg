@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" viewBox="20 20 68 68">
+  <rect x="20" y="20" width="68" height="68" rx="16" fill="#2F6FB0"/>
+  <g fill="#FFFFFF">
+    <path d="M34,74V62a2,2 0 0 1 2-2h3a2,2 0 0 1 2,2V74z"/>
+    <path d="M45,74V52a2,2 0 0 1 2-2h3a2,2 0 0 1 2,2V74z"/>
+    <path d="M56,74V56a2,2 0 0 1 2-2h3a2,2 0 0 1 2,2V74z"/>
+    <path d="M67,74V42a2,2 0 0 1 2-2h3a2,2 0 0 1 2,2V74z"/>
+  </g>
+  <polyline points="37.5,53 48.5,43 59.5,47 70.5,33" fill="none" stroke="#52B2D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#52B2D6">
+    <circle cx="37.5" cy="53" r="2.5"/><circle cx="48.5" cy="43" r="2.5"/>
+    <circle cx="59.5" cy="47" r="2.5"/><circle cx="70.5" cy="33" r="2.5"/>
+  </g>
+</svg>

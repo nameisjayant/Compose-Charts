@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.ComposeCharts" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.ComposeCharts.Splash" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/brand_ocean</item>
+        <item name="postSplashScreenTheme">@style/Theme.ComposeCharts</item>
+    </style>
 </resources>

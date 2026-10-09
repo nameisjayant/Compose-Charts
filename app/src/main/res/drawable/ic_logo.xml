@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Compose Charts logo: four rising bars with a trend line. Drawn on a 108dp adaptive-icon
+     canvas with all content inside the 66dp safe zone, so it serves as both the launcher
+     foreground and the splash-screen icon. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,74V62a2,2 0,0 1,2 -2h3a2,2 0,0 1,2 2V74z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M45,74V52a2,2 0,0 1,2 -2h3a2,2 0,0 1,2 2V74z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M56,74V56a2,2 0,0 1,2 -2h3a2,2 0,0 1,2 2V74z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M67,74V42a2,2 0,0 1,2 -2h3a2,2 0,0 1,2 2V74z" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M37.5,53L48.5,43L59.5,47L70.5,33"
+        android:strokeWidth="2.5"
+        android:strokeColor="#52B2D6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#52B2D6"
+        android:pathData="M37.5,53m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+    <path
+        android:fillColor="#52B2D6"
+        android:pathData="M48.5,43m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+    <path
+        android:fillColor="#52B2D6"
+        android:pathData="M59.5,47m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+    <path
+        android:fillColor="#52B2D6"
+        android:pathData="M70.5,33m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+</vector>
