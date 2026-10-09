@@ -19,6 +19,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Two series compared above and below a shared baseline",
                 category = "Bar",
             ),
+            ChartSample(
+                id = ChartSample.AREA_RANGE_LINE,
+                title = "Area range and line",
+                description = "A smooth line wrapped in a soft ribbon, drawn top to bottom",
+                category = "Line",
+            ),
         )
     }
 }

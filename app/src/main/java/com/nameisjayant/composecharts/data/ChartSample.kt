@@ -10,5 +10,6 @@ data class ChartSample(
 ) {
     companion object {
         const val VERTICAL_BAR = "vertical_bar"
+        const val AREA_RANGE_LINE = "area_range_line"
     }
 }

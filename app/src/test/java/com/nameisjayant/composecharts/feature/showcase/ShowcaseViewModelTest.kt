@@ -34,7 +34,9 @@ class ShowcaseViewModelTest {
         advanceUntilIdle()
 
         assertFalse(viewModel.state.value.isLoading)
-        assertEquals(listOf(ChartSample.VERTICAL_BAR), viewModel.state.value.samples.map { it.id })
+        assertEquals(
+            listOf(ChartSample.VERTICAL_BAR, ChartSample.AREA_RANGE_LINE),
+            viewModel.state.value.samples.map { it.id })
     }
 
     @Test
