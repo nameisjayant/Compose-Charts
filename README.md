@@ -11,7 +11,8 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7F52FF?logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-BOM%202026.09-4285F4?logo=jetpackcompose&logoColor=white)
 ![Min SDK](https://img.shields.io/badge/minSdk-24-3DDC84?logo=android&logoColor=white)
-![Version](https://img.shields.io/badge/version-0.1.0-2F6FB0)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.nameisjayant/compose-charts?color=2F6FB0)](https://central.sonatype.com/artifact/io.github.nameisjayant/compose-charts)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
 </div>
 
@@ -25,8 +26,8 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
     <th>Area range and line</th>
   </tr>
   <tr>
-    <td><img src="docs/screenshots/vertical-bar.png" width="300" alt="Vertical bar chart" /></td>
-    <td><img src="docs/screenshots/area-range-line.png" width="300" alt="Area range and line chart" /></td>
+    <td valign="top"><img src="docs/screenshots/vertical-bar.png" width="380" alt="Vertical bar chart" /></td>
+    <td valign="top"><img src="docs/screenshots/area-range-line.png" width="380" alt="Area range and line chart" /></td>
   </tr>
   <tr>
     <td>Two series compared above and below a shared baseline.</td>
@@ -54,29 +55,27 @@ More charts are on the way.
 
 ## Installation
 
-The library is not on Maven Central yet. For now, publish it to your local Maven repository:
-
-```bash
-./gradlew :charts:publishToMavenLocal
-```
-
-Then add it to your project:
+Compose Charts is published on Maven Central. Make sure `mavenCentral()` is in your repositories, then add:
 
 ```kotlin
-// settings.gradle.kts
-dependencyResolutionManagement {
-    repositories {
-        mavenLocal()
-        google()
-        mavenCentral()
-    }
-}
-
 // app/build.gradle.kts
 dependencies {
-    implementation("com.nameisjayant:compose-charts:0.1.0")
+    implementation("io.github.nameisjayant:compose-charts:0.1.0")
 }
 ```
+
+<details>
+<summary>Version catalog</summary>
+
+```toml
+[versions]
+composeCharts = "0.1.0"
+
+[libraries]
+compose-charts = { group = "io.github.nameisjayant", name = "compose-charts", version.ref = "composeCharts" }
+```
+
+</details>
 
 ## Usage
 
@@ -182,6 +181,8 @@ Issues and pull requests are welcome. When you add a chart:
 3. Add a screenshot to `docs/screenshots/` and a row to the tables above.
 
 <div align="center">
+
+Licensed under the [Apache License 2.0](LICENSE).
 
 Made with ❤️ and Jetpack Compose by [Jayant Kumar](https://github.com/nameisjayant)
 

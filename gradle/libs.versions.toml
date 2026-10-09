@@ -13,6 +13,7 @@ hilt = "2.60.1"
 hiltAndroidx = "1.4.0"
 kotlinxCoroutines = "1.11.0"
 splashscreen = "1.2.0"
+mavenPublish = "0.37.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,3 +49,4 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }

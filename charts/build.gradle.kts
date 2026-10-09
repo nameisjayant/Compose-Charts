@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
-    `maven-publish`
+    alias(libs.plugins.maven.publish)
 }
 
 group = providers.gradleProperty("GROUP").get()
@@ -25,11 +25,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-        }
     }
 }
 
@@ -61,11 +56,40 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            artifactId = "compose-charts"
-            afterEvaluate { from(components["release"]) }
+mavenPublishing {
+    // Uploads to the Central Portal and releases once validation passes. Sonatype credentials and
+    // the signing key come from ~/.gradle/gradle.properties, never from this repo.
+    publishToMavenCentral(automaticRelease = true)
+    // Central rejects unsigned uploads, so skipping this without a key only affects publishToMavenLocal.
+    if (providers.gradleProperty("signingInMemoryKey").isPresent) {
+        signAllPublications()
+    }
+
+    coordinates(group.toString(), "compose-charts", version.toString())
+
+    pom {
+        name.set("Compose Charts")
+        description.set("Beautiful, animated, fully customizable charts for Jetpack Compose.")
+        inceptionYear.set("2026")
+        url.set("https://github.com/nameisjayant/Compose-Charts")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("repo")
+            }
+        }
+        developers {
+            developer {
+                id.set("nameisjayant")
+                name.set("Jayant Kumar")
+                url.set("https://github.com/nameisjayant")
+            }
+        }
+        scm {
+            url.set("https://github.com/nameisjayant/Compose-Charts")
+            connection.set("scm:git:git://github.com/nameisjayant/Compose-Charts.git")
+            developerConnection.set("scm:git:ssh://git@github.com/nameisjayant/Compose-Charts.git")
         }
     }
 }
