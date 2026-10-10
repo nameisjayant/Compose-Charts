@@ -55,7 +55,19 @@ More charts are on the way.
 
 ## Installation
 
-Compose Charts is published on Maven Central. Make sure `mavenCentral()` is in your repositories, then add:
+Compose Charts is published on [Maven Central](https://central.sonatype.com/artifact/io.github.nameisjayant/compose-charts). No extra repository is needed, just make sure `mavenCentral()` is listed (new Android projects include it by default):
+
+```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+```
+
+Then add the dependency:
 
 ```kotlin
 // app/build.gradle.kts
@@ -179,6 +191,24 @@ Issues and pull requests are welcome. When you add a chart:
 1. Add the chart composable, its `XxxStyle` and `XxxDefaults`, plus a `XxxChartCard` wrapper in `:charts`.
 2. Add a `ChartSample` entry in `ChartSampleRepository` and a screen in `:app`.
 3. Add a screenshot to `docs/screenshots/` and a row to the tables above.
+
+## Publishing a release
+
+The `:charts` module is published with the [vanniktech maven-publish plugin](https://github.com/vanniktech/gradle-maven-publish-plugin). The Central Portal token and the GPG signing key live in `~/.gradle/gradle.properties`, never in this repo:
+
+```properties
+mavenCentralUsername=<portal token username>
+mavenCentralPassword=<portal token password>
+signingInMemoryKeyId=<last 8 chars of the key id>
+signingInMemoryKeyPassword=<key passphrase>
+signingInMemoryKey=<ascii-armored private key, on one line>
+```
+
+To release:
+
+1. Bump `VERSION_NAME` in `gradle.properties`.
+2. Optionally test the build locally with `./gradlew :charts:publishToMavenLocal`.
+3. Run `./gradlew :charts:publishToMavenCentral`. The release is published automatically and shows up on Maven Central within about 30 minutes.
 
 <div align="center">
 
