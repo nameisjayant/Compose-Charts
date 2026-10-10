@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.semantics.Role
@@ -43,6 +44,7 @@ import com.nameisjayant.charts.donut.DonutChartCardDefaults
 import com.nameisjayant.charts.donut.DonutChartDefaults
 import com.nameisjayant.charts.donut.DonutSegment
 import com.nameisjayant.composecharts.data.DonutSampleData
+import com.nameisjayant.composecharts.ui.CHART_CARD_TAG
 import com.nameisjayant.composecharts.ui.theme.ComposeChartsTheme
 import kotlin.math.roundToInt
 
@@ -126,7 +128,7 @@ fun DonutScreen(
                 contentStyle = DonutChartCardDefaults.style(
                     valueTextStyle = DonutChartCardDefaults.ValueTextStyle.copy(color = colors.onSurface),
                 ),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag(CHART_CARD_TAG),
             )
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 FilledTonalButton(

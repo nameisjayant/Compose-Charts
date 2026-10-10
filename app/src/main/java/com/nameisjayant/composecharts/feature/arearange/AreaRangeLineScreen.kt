@@ -23,6 +23,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -39,6 +40,7 @@ import com.nameisjayant.charts.line.AreaRangeLineChartCard
 import com.nameisjayant.charts.line.AreaRangeLineChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineSeries
 import com.nameisjayant.composecharts.data.AreaRangeSampleData
+import com.nameisjayant.composecharts.ui.CHART_CARD_TAG
 import com.nameisjayant.composecharts.ui.theme.ComposeChartsTheme
 import kotlin.math.roundToInt
 
@@ -107,7 +109,7 @@ fun AreaRangeLineScreen(
                     gridLineColor = colors.outlineVariant,
                     labelTextStyle = AreaRangeLineChartDefaults.LabelTextStyle.copy(color = colors.onSurface),
                 ),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag(CHART_CARD_TAG),
             )
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 FilledTonalButton(

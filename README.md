@@ -18,7 +18,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 
 ---
 
-## Screenshots
+## Preview
 
 <table>
   <tr>
@@ -26,12 +26,33 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
     <th>Area range and line</th>
   </tr>
   <tr>
-    <td valign="top"><img src="docs/screenshots/vertical-bar.png" width="380" alt="Vertical bar chart" /></td>
-    <td valign="top"><img src="docs/screenshots/area-range-line.png" width="380" alt="Area range and line chart" /></td>
+    <td valign="top"><img src="docs/gifs/vertical-bar.gif" width="380" alt="Animated vertical bar chart" /></td>
+    <td valign="top"><img src="docs/gifs/area-range-line.gif" width="380" alt="Animated area range and line chart" /></td>
   </tr>
   <tr>
     <td>Two series compared above and below a shared baseline.</td>
     <td>A smooth line inside a soft ribbon that can run in any direction.</td>
+  </tr>
+  <tr>
+    <th>Donut</th>
+    <th>Doughnut</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/donut.gif" width="380" alt="Animated donut chart" /></td>
+    <td valign="top"><img src="docs/gifs/doughnut.gif" width="380" alt="Animated doughnut chart" /></td>
+  </tr>
+  <tr>
+    <td>Rounded segments filling a gauge, with the percentage counting up in the centre.</td>
+    <td>Segments that thicken one after another around a shaded hole.</td>
+  </tr>
+  <tr>
+    <th>Spline area</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/spline-area.gif" width="380" alt="Animated spline area chart" /></td>
+  </tr>
+  <tr>
+    <td>A thick smoothed line over a fading fill, edge to edge.</td>
   </tr>
 </table>
 
@@ -326,7 +347,7 @@ Issues and pull requests are welcome. When you add a chart:
 
 1. Add the chart composable, its `XxxStyle` and `XxxDefaults`, plus a `XxxChartCard` wrapper in `:charts`.
 2. Add a `ChartSample` entry in `ChartSampleRepository` and a screen in `:app`.
-3. Add a screenshot to `docs/screenshots/` and a row to the tables above.
+3. Add a test to `RecordChartGifs` in `:app`, run `./scripts/record-chart-gifs.sh` to render the GIFs into `docs/gifs/` (needs `ffmpeg`), and add the chart to the tables above.
 
 ## Publishing a release
 

@@ -21,6 +21,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,6 +32,7 @@ import com.nameisjayant.charts.bar.VerticalBarChartCard
 import com.nameisjayant.charts.bar.VerticalBarChartDefaults
 import com.nameisjayant.charts.common.ChartCardDefaults
 import com.nameisjayant.charts.common.ChartLegendDefaults
+import com.nameisjayant.composecharts.ui.CHART_CARD_TAG
 import com.nameisjayant.composecharts.ui.theme.ComposeChartsTheme
 
 @Composable
@@ -89,7 +91,7 @@ fun VerticalBarScreen(
                     gridLineColor = colors.outlineVariant,
                     baselineColor = colors.outlineVariant,
                 ),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag(CHART_CARD_TAG),
             )
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 FilledTonalButton(

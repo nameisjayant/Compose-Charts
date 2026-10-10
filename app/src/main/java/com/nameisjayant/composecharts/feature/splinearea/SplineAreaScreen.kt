@@ -21,6 +21,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nameisjayant.charts.common.ChartBarsIcon
 import com.nameisjayant.charts.line.SplineAreaChartCard
 import com.nameisjayant.charts.line.SplineAreaChartCardDefaults
+import com.nameisjayant.composecharts.ui.CHART_CARD_TAG
 import com.nameisjayant.composecharts.ui.theme.ComposeChartsTheme
 import java.util.Locale
 
@@ -95,7 +97,7 @@ fun SplineAreaScreen(
                     ),
                     actionBackgroundColor = if (isDark) colors.surfaceVariant else SplineAreaChartCardDefaults.ActionBackgroundColor,
                 ),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag(CHART_CARD_TAG),
             )
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 FilledTonalButton(
