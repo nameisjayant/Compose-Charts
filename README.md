@@ -22,58 +22,46 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 
 <table>
   <tr>
-    <th>Vertical bar</th>
-    <th>Area range and line</th>
+    <th width="33%">Vertical bar</th>
+    <th width="33%">Area range and line</th>
+    <th width="33%">Donut</th>
   </tr>
   <tr>
-    <td valign="top"><img src="docs/gifs/vertical-bar.gif" width="380" alt="Animated vertical bar chart" /></td>
-    <td valign="top"><img src="docs/gifs/area-range-line.gif" width="380" alt="Animated area range and line chart" /></td>
+    <td valign="top"><img src="docs/gifs/vertical-bar.gif" width="260" alt="Animated vertical bar chart" /></td>
+    <td valign="top"><img src="docs/gifs/area-range-line.gif" width="260" alt="Animated area range and line chart" /></td>
+    <td valign="top"><img src="docs/gifs/donut.gif" width="260" alt="Animated donut chart" /></td>
   </tr>
   <tr>
-    <td>Two series compared above and below a shared baseline.</td>
-    <td>A smooth line inside a soft ribbon that can run in any direction.</td>
+    <td valign="top">Two series compared above and below a shared baseline.</td>
+    <td valign="top">A smooth line inside a soft ribbon that can run in any direction.</td>
+    <td valign="top">Rounded segments filling a gauge, with the percentage counting up in the centre.</td>
   </tr>
   <tr>
-    <th>Donut</th>
-    <th>Doughnut</th>
+    <th width="33%">Doughnut</th>
+    <th width="33%">Spline area</th>
+    <th width="33%">Stacked bar</th>
   </tr>
   <tr>
-    <td valign="top"><img src="docs/gifs/donut.gif" width="380" alt="Animated donut chart" /></td>
-    <td valign="top"><img src="docs/gifs/doughnut.gif" width="380" alt="Animated doughnut chart" /></td>
+    <td valign="top"><img src="docs/gifs/doughnut.gif" width="260" alt="Animated doughnut chart" /></td>
+    <td valign="top"><img src="docs/gifs/spline-area.gif" width="260" alt="Animated spline area chart" /></td>
+    <td valign="top"><img src="docs/gifs/stacked-bar.gif" width="260" alt="Animated stacked bar chart" /></td>
   </tr>
   <tr>
-    <td>Rounded segments filling a gauge, with the percentage counting up in the centre.</td>
-    <td>Segments that thicken one after another around a shaded hole.</td>
+    <td valign="top">Segments that thicken one after another around a shaded hole.</td>
+    <td valign="top">A thick smoothed line over a fading fill, edge to edge.</td>
+    <td valign="top">Rounded stacks of several series, with a trend label in the corner.</td>
   </tr>
   <tr>
-    <th>Spline area</th>
-    <th>Stacked bar</th>
+    <th width="33%">Horizontal bar</th>
+    <th width="33%">Ranked bar</th>
   </tr>
   <tr>
-    <td valign="top"><img src="docs/gifs/spline-area.gif" width="380" alt="Animated spline area chart" /></td>
-    <td valign="top"><img src="docs/gifs/stacked-bar.gif" width="380" alt="Animated stacked bar chart" /></td>
+    <td valign="top"><img src="docs/gifs/horizontal-bar.gif" width="260" alt="Animated horizontal bar chart" /></td>
+    <td valign="top"><img src="docs/gifs/ranked-bar.gif" width="260" alt="Animated ranked bar chart" /></td>
   </tr>
   <tr>
-    <td>A thick smoothed line over a fading fill, edge to edge.</td>
-    <td>Rounded stacks of several series, with a trend label in the corner.</td>
-  </tr>
-  <tr>
-    <th>Horizontal bar</th>
-  </tr>
-  <tr>
-    <td valign="top"><img src="docs/gifs/horizontal-bar.gif" width="380" alt="Animated horizontal bar chart" /></td>
-  </tr>
-  <tr>
-    <td>Pill-shaped progress bars under a profile row.</td>
-  </tr>
-  <tr>
-    <th>Ranked bar</th>
-  </tr>
-  <tr>
-    <td valign="top"><img src="docs/gifs/ranked-bar.gif" width="380" alt="Animated ranked bar chart" /></td>
-  </tr>
-  <tr>
-    <td>A labelled staircase of bars, longest first, from navy to sky.</td>
+    <td valign="top">Pill-shaped progress bars under a profile row.</td>
+    <td valign="top">A labelled staircase of bars, longest first, from navy to sky.</td>
   </tr>
 </table>
 
@@ -475,7 +463,7 @@ Issues and pull requests are welcome. When you add a chart:
 
 1. Add the chart composable, its `XxxStyle` and `XxxDefaults`, plus a `XxxChartCard` wrapper in `:charts`.
 2. Add a `ChartSample` entry in `ChartSampleRepository` and a screen in `:app`.
-3. Add a test to `RecordChartGifs` in `:app`, run `./scripts/record-chart-gifs.sh` to render the GIFs into `docs/gifs/` (needs `ffmpeg`), and add the chart to the tables above.
+3. Add a test to `RecordChartGifs` in `:app`, run `./scripts/record-chart-gifs.sh` to render the GIFs into `docs/gifs/` (needs `ffmpeg`), and add the chart to the tables above (the Preview table holds three GIFs per row).
 
 ## Publishing a release
 
