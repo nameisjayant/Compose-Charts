@@ -50,6 +50,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 |---|---|---|
 | **Vertical bar** | `VerticalBarChart`, `VerticalBarChartCard` | One or two series (up and down from a baseline), pill-shaped bars, grid lines |
 | **Area range and line** | `AreaRangeLineChart`, `AreaRangeLineChartCard` | Smoothed line, fading ribbon, data points, axis ranges and label formatters |
+| **Donut** | `DonutChart`, `DonutChartCard` | Rounded overlapping segments on a track, animated percentage in the centre, side legend and a summary row |
 
 More charts are on the way.
 
@@ -137,6 +138,26 @@ AreaRangeLineChartCard(
 ```
 
 Points are joined in list order, so the line can run top to bottom, as in the altitude profile above. If you leave out `xRange` or `yRange`, a range with round step values is picked for you.
+
+### Donut
+
+```kotlin
+DonutChartCard(
+    title = "Storage of your device",
+    segments = listOf(
+        DonutSegment("Documents", 22f, DonutChartDefaults.DocumentsColor),
+        DonutSegment("Photos", 47f, DonutChartDefaults.PhotosColor),
+        DonutSegment("Music", 38f, DonutChartDefaults.MusicColor),
+        DonutSegment("Videos", 30f, DonutChartDefaults.VideosColor),
+    ),
+    maxValue = 178f,
+    caption = "Used storage",
+    value = "137GB",
+    action = { ChartSettingsIcon() },
+)
+```
+
+With `maxValue` the ring works as a gauge: the segments fill 137 of 178, and the centre shows `77%`. Leave it out and the segments share the whole ring. Use `centerLabelFormatter` to change the centre text, and `DonutChartDefaults.style(startAngle = -90f)` to start at 12 o'clock.
 
 ### Styling
 

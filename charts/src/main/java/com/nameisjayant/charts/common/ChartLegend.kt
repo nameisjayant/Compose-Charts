@@ -3,6 +3,7 @@ package com.nameisjayant.charts.common
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -67,29 +68,50 @@ public object ChartLegendDefaults {
     )
 }
 
-/** Lays out [items] in a row, wrapping onto further lines when they don't fit. */
+/** How a [ChartLegend] arranges its items. */
+public enum class LegendOrientation {
+    /** In a row, wrapping onto further lines when they don't fit. */
+    Horizontal,
+
+    /** One item per line, [ChartLegendStyle.lineSpacing] apart. */
+    Vertical,
+}
+
+/** Lays out [items] in a wrapping row, or in a column when [orientation] is vertical. */
 @Composable
 public fun ChartLegend(
     items: List<LegendItem>,
     modifier: Modifier = Modifier,
     style: ChartLegendStyle = ChartLegendDefaults.style(),
+    orientation: LegendOrientation = LegendOrientation.Horizontal,
 ) {
-    FlowRow(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(style.itemSpacing),
-        verticalArrangement = Arrangement.spacedBy(style.lineSpacing),
-    ) {
-        items.forEach { item ->
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(
-                    modifier = Modifier
-                        .size(style.indicatorSize)
-                        .background(color = item.color, shape = style.indicatorShape),
-                )
-                Spacer(Modifier.width(style.indicatorTextSpacing))
-                BasicText(text = item.label, style = style.textStyle)
-            }
+    when (orientation) {
+        LegendOrientation.Horizontal -> FlowRow(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(style.itemSpacing),
+            verticalArrangement = Arrangement.spacedBy(style.lineSpacing),
+        ) {
+            items.forEach { LegendEntry(it, style) }
         }
+        LegendOrientation.Vertical -> Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(style.lineSpacing),
+        ) {
+            items.forEach { LegendEntry(it, style) }
+        }
+    }
+}
+
+@Composable
+private fun LegendEntry(item: LegendItem, style: ChartLegendStyle) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Box(
+            modifier = Modifier
+                .size(style.indicatorSize)
+                .background(color = item.color, shape = style.indicatorShape),
+        )
+        Spacer(Modifier.width(style.indicatorTextSpacing))
+        BasicText(text = item.label, style = style.textStyle)
     }
 }
 

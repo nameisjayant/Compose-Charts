@@ -8,12 +8,17 @@ import androidx.compose.ui.unit.dp
 import com.nameisjayant.charts.bar.BarSeries
 import com.nameisjayant.charts.bar.VerticalBarChart
 import com.nameisjayant.charts.bar.VerticalBarChartDefaults
+import com.nameisjayant.charts.donut.DonutChart
+import com.nameisjayant.charts.donut.DonutChartDefaults
+import com.nameisjayant.charts.donut.DonutSegment
 import com.nameisjayant.charts.line.AreaRangeLineChart
 import com.nameisjayant.charts.line.AreaRangeLineChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineSeries
 import com.nameisjayant.composecharts.data.AreaRangeSampleData
 import com.nameisjayant.composecharts.data.ChartSample
+import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.VerticalBarSampleData
+import com.nameisjayant.composecharts.feature.donut.donutPalette
 
 /** A live, miniature rendering of a sample's chart for its showcase tile. */
 @Composable
@@ -49,5 +54,18 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
             ),
             modifier = modifier.fillMaxSize(),
         )
+        ChartSample.DONUT -> {
+            val palette = donutPalette()
+            DonutChart(
+                segments = DonutSampleData.usedGb.mapIndexed { index, value -> DonutSegment("", value, palette[index]) },
+                maxValue = DonutSampleData.CAPACITY_GB,
+                style = DonutChartDefaults.style(
+                    strokeWidth = 12.dp,
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    showCenterLabel = false,
+                ),
+                modifier = modifier.fillMaxSize(),
+            )
+        }
     }
 }

@@ -25,6 +25,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "A smooth line wrapped in a soft ribbon, drawn top to bottom",
                 category = "Line",
             ),
+            ChartSample(
+                id = ChartSample.DONUT,
+                title = "Donut",
+                description = "Rounded segments filling a share of a ring, with a summary below",
+                category = "Pie",
+            ),
         )
     }
 }

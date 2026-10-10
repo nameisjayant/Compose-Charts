@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.feature.arearange.AreaRangeLineRoute
+import com.nameisjayant.composecharts.feature.donut.DonutRoute
 import com.nameisjayant.composecharts.feature.showcase.ShowcaseRoute
 import com.nameisjayant.composecharts.feature.verticalbar.VerticalBarRoute
 
@@ -22,6 +23,7 @@ fun AppNavHost() {
     when (openSampleId) {
         ChartSample.VERTICAL_BAR -> VerticalBarRoute(onBack = closeSample)
         ChartSample.AREA_RANGE_LINE -> AreaRangeLineRoute(onBack = closeSample)
+        ChartSample.DONUT -> DonutRoute(onBack = closeSample)
         else -> ShowcaseRoute(onOpenSample = { openSampleId = it })
     }
 }

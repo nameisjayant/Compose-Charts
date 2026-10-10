@@ -20,9 +20,13 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.TextStyle
@@ -32,6 +36,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 /** Visual configuration of a [ChartCard]. Build one with [ChartCardDefaults.style]. */
 @Immutable
@@ -104,16 +111,7 @@ public fun ChartCard(
     style: ChartCardStyle = ChartCardDefaults.style(),
     content: @Composable () -> Unit,
 ) {
-    Column(
-        modifier = modifier
-            .shadow(elevation = style.elevation, shape = style.shape)
-            .clip(style.shape)
-            .background(color = style.backgroundColor, shape = style.shape)
-            .then(
-                if (style.border != null) Modifier.border(style.border, style.shape) else Modifier,
-            )
-            .padding(style.contentPadding),
-    ) {
+    Column(modifier = modifier.chartCardFrame(style)) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             if (icon != null) {
                 icon()
@@ -134,6 +132,16 @@ public fun ChartCard(
         content()
     }
 }
+
+/** The background, border, elevation and padding of a [ChartCard], for cards with their own layout. */
+internal fun Modifier.chartCardFrame(style: ChartCardStyle): Modifier = this
+    .shadow(elevation = style.elevation, shape = style.shape)
+    .clip(style.shape)
+    .background(color = style.backgroundColor, shape = style.shape)
+    .then(
+        if (style.border != null) Modifier.border(style.border, style.shape) else Modifier,
+    )
+    .padding(style.contentPadding)
 
 /** Three vertically stacked dots, the usual "more options" glyph for a [ChartCard] action. */
 @Composable
@@ -172,6 +180,56 @@ public fun ChartFilterIcon(
         val lowerStart = size.width * (1f - lowerBarFraction.coerceIn(0f, 1f)) + half
         drawLine(color, Offset(lowerStart, lowerY), Offset(size.width - half, lowerY), thickness, StrokeCap.Round)
     }
+}
+
+/** A cog wheel with [teeth] teeth around a punched-out hub: a "settings" glyph. */
+@Composable
+public fun ChartSettingsIcon(
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF000000),
+    size: Dp = 22.dp,
+    teeth: Int = 8,
+) {
+    Spacer(
+        modifier = modifier
+            .size(size)
+            .drawWithCache {
+                val gear = gearPath(
+                    center = Offset(this.size.width / 2, this.size.height / 2),
+                    outerRadius = this.size.minDimension / 2,
+                    teeth = teeth,
+                )
+                onDrawBehind { drawPath(gear, color) }
+            },
+    )
+}
+
+private fun gearPath(center: Offset, outerRadius: Float, teeth: Int): Path {
+    val bodyRadius = outerRadius * 0.72f
+    val toothRoot = bodyRadius * 0.9f
+    val rootHalfWidth = outerRadius * 0.21f
+    val tipHalfWidth = outerRadius * 0.16f
+
+    var gear = Path().apply { addOval(Rect(center, bodyRadius)) }
+    val tooth = Path()
+    repeat(teeth.coerceAtLeast(0)) { index ->
+        val angle = 2 * PI * index / teeth
+        val dirX = cos(angle).toFloat()
+        val dirY = sin(angle).toFloat()
+        fun point(distance: Float, offset: Float) = Offset(
+            x = center.x + dirX * distance - dirY * offset,
+            y = center.y + dirY * distance + dirX * offset,
+        )
+        tooth.rewind()
+        point(toothRoot, -rootHalfWidth).let { tooth.moveTo(it.x, it.y) }
+        point(outerRadius, -tipHalfWidth).let { tooth.lineTo(it.x, it.y) }
+        point(outerRadius, tipHalfWidth).let { tooth.lineTo(it.x, it.y) }
+        point(toothRoot, rootHalfWidth).let { tooth.lineTo(it.x, it.y) }
+        tooth.close()
+        gear = Path.combine(PathOperation.Union, gear, tooth)
+    }
+    val hub = Path().apply { addOval(Rect(center, outerRadius * 0.3f)) }
+    return Path.combine(PathOperation.Difference, gear, hub)
 }
 
 @Preview
