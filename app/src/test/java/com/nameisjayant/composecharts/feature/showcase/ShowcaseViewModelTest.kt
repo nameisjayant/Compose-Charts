@@ -35,7 +35,8 @@ class ShowcaseViewModelTest {
 
         assertFalse(viewModel.state.value.isLoading)
         assertEquals(
-            listOf(ChartSample.VERTICAL_BAR, ChartSample.AREA_RANGE_LINE, ChartSample.DONUT, ChartSample.DOUGHNUT),
+            listOf(ChartSample.VERTICAL_BAR, ChartSample.AREA_RANGE_LINE, ChartSample.DONUT, ChartSample.DOUGHNUT,
+                ChartSample.SPLINE_AREA),
             viewModel.state.value.samples.map { it.id })
     }
 

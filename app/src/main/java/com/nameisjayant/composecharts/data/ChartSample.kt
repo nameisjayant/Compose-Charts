@@ -13,5 +13,6 @@ data class ChartSample(
         const val AREA_RANGE_LINE = "area_range_line"
         const val DONUT = "donut"
         const val DOUGHNUT = "doughnut"
+        const val SPLINE_AREA = "spline_area"
     }
 }

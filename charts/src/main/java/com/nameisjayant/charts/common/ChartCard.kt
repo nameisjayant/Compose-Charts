@@ -203,6 +203,30 @@ public fun ChartDoughnutIcon(
     }
 }
 
+/** Rounded bars standing on a shared baseline, each [barHeights] entry a fraction of the height: a "bar chart" glyph. */
+@Composable
+public fun ChartBarsIcon(
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF000000),
+    size: Dp = 20.dp,
+    barWidth: Dp = 3.5.dp,
+    barHeights: List<Float> = listOf(0.7f, 1f, 0.4f),
+) {
+    Canvas(modifier = modifier.size(size)) {
+        val thickness = barWidth.toPx()
+        val half = thickness / 2
+        val count = barHeights.size
+        if (count == 0) return@Canvas
+        val step = if (count > 1) (this.size.width - thickness) / (count - 1) else 0f
+        barHeights.forEachIndexed { index, fraction ->
+            val x = if (count > 1) half + step * index else this.size.width / 2
+            val bottom = this.size.height - half
+            val top = bottom - (this.size.height - thickness) * fraction.coerceIn(0f, 1f)
+            drawLine(color, Offset(x, top), Offset(x, bottom), thickness, StrokeCap.Round)
+        }
+    }
+}
+
 /** A cog wheel with [teeth] teeth around a punched-out hub: a "settings" glyph. */
 @Composable
 public fun ChartSettingsIcon(

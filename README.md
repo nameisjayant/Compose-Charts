@@ -52,6 +52,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Area range and line** | `AreaRangeLineChart`, `AreaRangeLineChartCard` | Smoothed line, fading ribbon, data points, axis ranges and label formatters |
 | **Donut** | `DonutChart`, `DonutChartCard` | Rounded overlapping segments on a track, animated percentage in the centre, side legend and a summary row |
 | **Doughnut** | `DoughnutChart`, `DoughnutChartCard` | Segments that get thicker one after another, a shaded hole, a tinted header and a footer slot |
+| **Spline area** | `SplineAreaChart`, `SplineAreaChartCard` | A thick smoothed line over a fading fill, edge to edge, under a headline value, change badge and action tile |
 
 More charts are on the way.
 
@@ -250,6 +251,35 @@ DoughnutChart(
 ```
 
 Each segment is a little thicker than the one before, and the last one reaches the edge. The segments run clockwise and finish at 12 o'clock, so the empty track sits just before it, and the centre shows the filled share (`73%`). Use `DoughnutChartDefaults.style(endAngle = ..., firstSegmentRadiusFraction = ..., holeRadiusFraction = ...)` to move the end point, change how much the segments thicken, or resize the hole.
+
+### Spline area
+
+```kotlin
+val trend = listOf(180f, 148f, 194f, 184f, 255f, 120f, 200f, 248f, 194f, 200f, 140f, 196f, 192f, 248f)
+```
+
+**Chart card**
+
+```kotlin
+SplineAreaChartCard(
+    title = "Expected earnings",
+    value = "€682.5",
+    badge = "+2.45%",
+    values = trend,
+    action = { ChartBarsIcon(color = SplineAreaChartCardDefaults.ActionIconColor) },
+)
+```
+
+**Chart only**
+
+```kotlin
+SplineAreaChart(
+    values = trend,
+    modifier = Modifier.fillMaxWidth().height(170.dp),
+)
+```
+
+The values are spread evenly from the left edge to the right edge, and in the card the chart reaches the card's left, right and bottom edges. By default the line is scaled to the data's own range, with the lowest value 45% of the way up so the fill has room to fade. Pass `minValue = 0f` and `SplineAreaChartDefaults.style(bottomSpaceFraction = 0f)` to measure from zero instead.
 
 ### Styling
 

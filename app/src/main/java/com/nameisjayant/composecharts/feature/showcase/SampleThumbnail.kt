@@ -16,10 +16,13 @@ import com.nameisjayant.charts.donut.DoughnutChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineChart
 import com.nameisjayant.charts.line.AreaRangeLineChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineSeries
+import com.nameisjayant.charts.line.SplineAreaChart
+import com.nameisjayant.charts.line.SplineAreaChartDefaults
 import com.nameisjayant.composecharts.data.AreaRangeSampleData
 import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.DoughnutSampleData
+import com.nameisjayant.composecharts.data.SplineAreaSampleData
 import com.nameisjayant.composecharts.data.VerticalBarSampleData
 import com.nameisjayant.composecharts.feature.donut.donutPalette
 import com.nameisjayant.composecharts.feature.doughnut.doughnutPalette
@@ -86,5 +89,10 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
                 modifier = modifier.fillMaxSize(),
             )
         }
+        ChartSample.SPLINE_AREA -> SplineAreaChart(
+            values = SplineAreaSampleData.trend,
+            style = SplineAreaChartDefaults.style(lineWidth = 2.dp, bottomSpaceFraction = 0.3f),
+            modifier = modifier.fillMaxSize(),
+        )
     }
 }

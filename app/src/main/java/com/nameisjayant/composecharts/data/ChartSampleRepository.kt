@@ -37,6 +37,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Segments that thicken around a shaded hole, with a profile footer",
                 category = "Pie",
             ),
+            ChartSample(
+                id = ChartSample.SPLINE_AREA,
+                title = "Spline area",
+                description = "A headline figure over a full-bleed trend line with a fading fill",
+                category = "Line",
+            ),
         )
     }
 }
