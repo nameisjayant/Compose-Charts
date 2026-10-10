@@ -57,6 +57,15 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
     <td>A thick smoothed line over a fading fill, edge to edge.</td>
     <td>Rounded stacks of several series, with a trend label in the corner.</td>
   </tr>
+  <tr>
+    <th>Horizontal bar</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/horizontal-bar.gif" width="380" alt="Animated horizontal bar chart" /></td>
+  </tr>
+  <tr>
+    <td>Pill-shaped progress bars under a profile row.</td>
+  </tr>
 </table>
 
 ## Features
@@ -78,6 +87,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Doughnut** | `DoughnutChart`, `DoughnutChartCard` | Segments that get thicker one after another, a shaded hole, a tinted header and a footer slot |
 | **Spline area** | `SplineAreaChart`, `SplineAreaChartCard` | A thick smoothed line over a fading fill, edge to edge, under a headline value, change badge and action tile |
 | **Stacked bar** | `StackedBarChart`, `StackedBarChartCard` | Any number of series stacked per bar, rounded stack ends, a title icon, a description and a trend label |
+| **Horizontal bar** | `HorizontalBarChart`, `HorizontalBarChartCard` | Pill-shaped fills over lighter tracks, a profile row with avatar and action button, and a clipped description |
 
 More charts are on the way.
 
@@ -337,6 +347,43 @@ StackedBarChart(
 ```
 
 The first series sits at the bottom of every stack. Only the top and bottom of each whole stack are rounded; the segments inside meet flush. The bars share the width left after `barSpacing`, so they get wider when there are fewer of them. Cap them with `StackedBarChartDefaults.style(maxBarWidth = 24.dp)`. The tallest stack fills the height unless you pass `maxValue`. The legend is off by default; turn it on with `showLegend = true`, or pass your own `action` in place of the trend label.
+
+### Horizontal bar
+
+```kotlin
+val bars = listOf(
+    HorizontalBar(value = 31f, total = 60f),
+    HorizontalBar(value = 56f, total = 80f),
+    HorizontalBar(value = 30f, total = 51f),
+    HorizontalBar(value = 21f, total = 32f),
+    HorizontalBar(value = 38f, total = 63f),
+)
+```
+
+**Chart card**
+
+```kotlin
+HorizontalBarChartCard(
+    title = "Horizontal bar chart with border radius",
+    bars = bars,
+    name = "Andres",
+    role = "Team Leader",
+    avatar = { ChartInitialsAvatar(text = "A") }, // or your own Image clipped to a circle
+    action = { ChartPillButton(text = "PROFILE", onClick = { /* open profile */ }) },
+    description = "Tasks finished out of tasks assigned in each of the last five sprints.",
+)
+```
+
+**Chart only**
+
+```kotlin
+HorizontalBarChart(
+    bars = bars,
+    modifier = Modifier.fillMaxWidth(),
+)
+```
+
+Each bar is a dark fill (`value`) drawn over a lighter track (`total`). The chart sets its own height from the number of bars, `barHeight` and `barSpacing`, so only give it a width. The longest track fills the width unless you pass `maxValue`. Bars are pills by default; pass `HorizontalBarChartDefaults.style(cornerRadius = 4.dp)` for squarer ends. The profile row is left out when `avatar`, `name`, `role` and `action` are all `null`, and the description is cut off after two lines (`HorizontalBarChartCardDefaults.style(descriptionMaxLines = …)`).
 
 ### Styling
 

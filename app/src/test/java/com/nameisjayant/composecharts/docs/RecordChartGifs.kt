@@ -16,6 +16,8 @@ import com.nameisjayant.composecharts.feature.donut.DonutScreen
 import com.nameisjayant.composecharts.feature.donut.DonutViewModel
 import com.nameisjayant.composecharts.feature.doughnut.DoughnutScreen
 import com.nameisjayant.composecharts.feature.doughnut.DoughnutViewModel
+import com.nameisjayant.composecharts.feature.horizontalbar.HorizontalBarScreen
+import com.nameisjayant.composecharts.feature.horizontalbar.HorizontalBarViewModel
 import com.nameisjayant.composecharts.feature.splinearea.SplineAreaScreen
 import com.nameisjayant.composecharts.feature.splinearea.SplineAreaViewModel
 import com.nameisjayant.composecharts.feature.stackedbar.StackedBarScreen
@@ -100,6 +102,15 @@ class RecordChartGifs {
         record("stacked-bar", shuffle = "Shuffle data") {
             val state by viewModel.state.collectAsState()
             StackedBarScreen(state = state, onIntent = viewModel::onIntent, onBack = {})
+        }
+    }
+
+    @Test
+    fun horizontalBar() {
+        val viewModel = HorizontalBarViewModel()
+        record("horizontal-bar", shuffle = "Shuffle data") {
+            val state by viewModel.state.collectAsState()
+            HorizontalBarScreen(state = state, onIntent = viewModel::onIntent, onBack = {})
         }
     }
 

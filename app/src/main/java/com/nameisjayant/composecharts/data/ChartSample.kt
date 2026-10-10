@@ -15,5 +15,6 @@ data class ChartSample(
         const val DOUGHNUT = "doughnut"
         const val SPLINE_AREA = "spline_area"
         const val STACKED_BAR = "stacked_bar"
+        const val HORIZONTAL_BAR = "horizontal_bar"
     }
 }

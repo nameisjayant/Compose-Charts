@@ -1,11 +1,15 @@
 package com.nameisjayant.composecharts.feature.showcase
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nameisjayant.charts.bar.BarSeries
+import com.nameisjayant.charts.bar.HorizontalBar
+import com.nameisjayant.charts.bar.HorizontalBarChart
+import com.nameisjayant.charts.bar.HorizontalBarChartDefaults
 import com.nameisjayant.charts.bar.StackedBarChart
 import com.nameisjayant.charts.bar.StackedBarChartDefaults
 import com.nameisjayant.charts.bar.VerticalBarChart
@@ -24,6 +28,7 @@ import com.nameisjayant.composecharts.data.AreaRangeSampleData
 import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.DoughnutSampleData
+import com.nameisjayant.composecharts.data.HorizontalBarSampleData
 import com.nameisjayant.composecharts.data.SplineAreaSampleData
 import com.nameisjayant.composecharts.data.StackedBarSampleData
 import com.nameisjayant.composecharts.data.VerticalBarSampleData
@@ -107,5 +112,10 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
                 modifier = modifier.fillMaxSize(),
             )
         }
+        ChartSample.HORIZONTAL_BAR -> HorizontalBarChart(
+            bars = HorizontalBarSampleData.done.zip(HorizontalBarSampleData.assigned, ::HorizontalBar),
+            style = HorizontalBarChartDefaults.style(barHeight = 8.dp, barSpacing = 4.dp),
+            modifier = modifier.fillMaxWidth(),
+        )
     }
 }

@@ -49,6 +49,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Rounded stacks of three series under a title, description and trend",
                 category = "Bar",
             ),
+            ChartSample(
+                id = ChartSample.HORIZONTAL_BAR,
+                title = "Horizontal bar",
+                description = "Pill-shaped progress bars under a profile row, with a short description",
+                category = "Bar",
+            ),
         )
     }
 }

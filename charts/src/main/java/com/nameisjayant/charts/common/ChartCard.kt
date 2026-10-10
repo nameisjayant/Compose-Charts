@@ -4,6 +4,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
@@ -31,6 +34,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -266,6 +270,47 @@ public fun ChartSparkIcon(
                 onDrawBehind { drawPath(path, color, style = style) }
             },
     )
+}
+
+/** An outlined, fully rounded text button, e.g. a "PROFILE" link in a card's header. */
+@Composable
+public fun ChartPillButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF000000),
+    borderWidth: Dp = 2.dp,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+    textStyle: TextStyle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp),
+) {
+    BasicText(
+        text = text,
+        style = textStyle.copy(color = color),
+        modifier = modifier
+            .clip(CircleShape)
+            .border(BorderStroke(borderWidth, color), CircleShape)
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(contentPadding),
+    )
+}
+
+/** A filled circle with a short [text] (usually initials) in the middle: a stand-in for a profile photo. */
+@Composable
+public fun ChartInitialsAvatar(
+    text: String,
+    modifier: Modifier = Modifier,
+    size: Dp = 56.dp,
+    backgroundColor: Color = Color(0xFF3375B5),
+    textStyle: TextStyle = TextStyle(color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.SemiBold),
+) {
+    Box(
+        modifier = modifier
+            .size(size)
+            .background(backgroundColor, CircleShape),
+        contentAlignment = Alignment.Center,
+    ) {
+        BasicText(text = text, style = textStyle)
+    }
 }
 
 /** A cog wheel with [teeth] teeth around a punched-out hub: a "settings" glyph. */
