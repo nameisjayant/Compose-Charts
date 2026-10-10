@@ -12,6 +12,7 @@ import com.nameisjayant.composecharts.feature.donut.DonutRoute
 import com.nameisjayant.composecharts.feature.doughnut.DoughnutRoute
 import com.nameisjayant.composecharts.feature.showcase.ShowcaseRoute
 import com.nameisjayant.composecharts.feature.splinearea.SplineAreaRoute
+import com.nameisjayant.composecharts.feature.stackedbar.StackedBarRoute
 import com.nameisjayant.composecharts.feature.verticalbar.VerticalBarRoute
 
 /** Showcase list plus one level of sample screens; the open sample survives config changes. */
@@ -28,6 +29,7 @@ fun AppNavHost() {
         ChartSample.DONUT -> DonutRoute(onBack = closeSample)
         ChartSample.DOUGHNUT -> DoughnutRoute(onBack = closeSample)
         ChartSample.SPLINE_AREA -> SplineAreaRoute(onBack = closeSample)
+        ChartSample.STACKED_BAR -> StackedBarRoute(onBack = closeSample)
         else -> ShowcaseRoute(onOpenSample = { openSampleId = it })
     }
 }

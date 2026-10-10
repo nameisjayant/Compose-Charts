@@ -47,12 +47,15 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
   </tr>
   <tr>
     <th>Spline area</th>
+    <th>Stacked bar</th>
   </tr>
   <tr>
     <td valign="top"><img src="docs/gifs/spline-area.gif" width="380" alt="Animated spline area chart" /></td>
+    <td valign="top"><img src="docs/gifs/stacked-bar.gif" width="380" alt="Animated stacked bar chart" /></td>
   </tr>
   <tr>
     <td>A thick smoothed line over a fading fill, edge to edge.</td>
+    <td>Rounded stacks of several series, with a trend label in the corner.</td>
   </tr>
 </table>
 
@@ -74,6 +77,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Donut** | `DonutChart`, `DonutChartCard` | Rounded overlapping segments on a track, animated percentage in the centre, side legend and a summary row |
 | **Doughnut** | `DoughnutChart`, `DoughnutChartCard` | Segments that get thicker one after another, a shaded hole, a tinted header and a footer slot |
 | **Spline area** | `SplineAreaChart`, `SplineAreaChartCard` | A thick smoothed line over a fading fill, edge to edge, under a headline value, change badge and action tile |
+| **Stacked bar** | `StackedBarChart`, `StackedBarChartCard` | Any number of series stacked per bar, rounded stack ends, a title icon, a description and a trend label |
 
 More charts are on the way.
 
@@ -301,6 +305,38 @@ SplineAreaChart(
 ```
 
 The values are spread evenly from the left edge to the right edge, and in the card the chart reaches the card's left, right and bottom edges. By default the line is scaled to the data's own range, with the lowest value 45% of the way up so the fill has room to fade. Pass `minValue = 0f` and `SplineAreaChartDefaults.style(bottomSpaceFraction = 0f)` to measure from zero instead.
+
+### Stacked bar
+
+```kotlin
+val series = listOf(
+    BarSeries("Store", listOf(70f, 40f, 22f, 40f, 17f, 21f, 13f, 8f), StackedBarChartDefaults.BottomColor),
+    BarSeries("Web", listOf(30f, 62f, 55f, 28f, 15f, 19f, 10f, 6f), StackedBarChartDefaults.MiddleColor),
+    BarSeries("App", listOf(30f, 18f, 29f, 15f, 30f, 10f, 17f, 40f), StackedBarChartDefaults.TopColor),
+)
+```
+
+**Chart card**
+
+```kotlin
+StackedBarChartCard(
+    title = "Bar chart",
+    subtitle = "Orders per day, split by channel: store, website and mobile app.",
+    trend = "+86%",
+    series = series,
+)
+```
+
+**Chart only**
+
+```kotlin
+StackedBarChart(
+    series = series,
+    modifier = Modifier.fillMaxWidth().height(130.dp),
+)
+```
+
+The first series sits at the bottom of every stack. Only the top and bottom of each whole stack are rounded; the segments inside meet flush. The bars share the width left after `barSpacing`, so they get wider when there are fewer of them. Cap them with `StackedBarChartDefaults.style(maxBarWidth = 24.dp)`. The tallest stack fills the height unless you pass `maxValue`. The legend is off by default; turn it on with `showLegend = true`, or pass your own `action` in place of the trend label.
 
 ### Styling
 

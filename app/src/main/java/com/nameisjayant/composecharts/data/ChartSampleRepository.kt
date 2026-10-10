@@ -43,6 +43,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "A headline figure over a full-bleed trend line with a fading fill",
                 category = "Line",
             ),
+            ChartSample(
+                id = ChartSample.STACKED_BAR,
+                title = "Stacked bar",
+                description = "Rounded stacks of three series under a title, description and trend",
+                category = "Bar",
+            ),
         )
     }
 }

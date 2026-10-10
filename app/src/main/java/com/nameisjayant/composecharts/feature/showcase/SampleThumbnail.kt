@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nameisjayant.charts.bar.BarSeries
+import com.nameisjayant.charts.bar.StackedBarChart
+import com.nameisjayant.charts.bar.StackedBarChartDefaults
 import com.nameisjayant.charts.bar.VerticalBarChart
 import com.nameisjayant.charts.bar.VerticalBarChartDefaults
 import com.nameisjayant.charts.donut.DonutChart
@@ -23,9 +25,11 @@ import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.DoughnutSampleData
 import com.nameisjayant.composecharts.data.SplineAreaSampleData
+import com.nameisjayant.composecharts.data.StackedBarSampleData
 import com.nameisjayant.composecharts.data.VerticalBarSampleData
 import com.nameisjayant.composecharts.feature.donut.donutPalette
 import com.nameisjayant.composecharts.feature.doughnut.doughnutPalette
+import com.nameisjayant.composecharts.feature.stackedbar.stackedBarPalette
 
 /** A live, miniature rendering of a sample's chart for its showcase tile. */
 @Composable
@@ -94,5 +98,14 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
             style = SplineAreaChartDefaults.style(lineWidth = 2.dp, bottomSpaceFraction = 0.3f),
             modifier = modifier.fillMaxSize(),
         )
+        ChartSample.STACKED_BAR -> {
+            val palette = stackedBarPalette()
+            StackedBarChart(
+                series = listOf(StackedBarSampleData.store, StackedBarSampleData.web, StackedBarSampleData.app)
+                    .mapIndexed { index, values -> BarSeries("", values, palette[index]) },
+                style = StackedBarChartDefaults.style(barSpacing = 3.dp, cornerRadius = 3.dp),
+                modifier = modifier.fillMaxSize(),
+            )
+        }
     }
 }

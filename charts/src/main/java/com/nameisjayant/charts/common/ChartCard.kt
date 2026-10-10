@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -225,6 +226,46 @@ public fun ChartBarsIcon(
             drawLine(color, Offset(x, top), Offset(x, bottom), thickness, StrokeCap.Round)
         }
     }
+}
+
+/**
+ * A hand-drawn looking zigzag through [points] (heights as fractions, 0 at the bottom), spaced
+ * evenly from left to right and smoothed: a "trend" glyph.
+ */
+@Composable
+public fun ChartSparkIcon(
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF4499C8),
+    size: DpSize = DpSize(width = 30.dp, height = 14.dp),
+    strokeWidth: Dp = 2.dp,
+    points: List<Float> = listOf(0.1f, 0.65f, 0.3f, 0.75f, 0.25f, 0.85f, 0.45f, 0.7f, 0.95f),
+) {
+    Spacer(
+        modifier = modifier
+            .size(size)
+            .drawWithCache {
+                val stroke = strokeWidth.toPx()
+                val inset = stroke / 2
+                val step = if (points.size > 1) (this.size.width - stroke) / (points.size - 1) else 0f
+                val offsets = points.mapIndexed { index, fraction ->
+                    Offset(
+                        x = inset + step * index,
+                        y = this.size.height - inset - (this.size.height - stroke) * fraction.coerceIn(0f, 1f),
+                    )
+                }
+                // Curves through the midpoints between points, bending at each point.
+                val path = Path()
+                offsets.firstOrNull()?.let { path.moveTo(it.x, it.y) }
+                for (index in 1 until offsets.lastIndex) {
+                    val point = offsets[index]
+                    val mid = (point + offsets[index + 1]) / 2f
+                    path.quadraticTo(point.x, point.y, mid.x, mid.y)
+                }
+                offsets.lastOrNull()?.let { path.lineTo(it.x, it.y) }
+                val style = Stroke(width = stroke, cap = StrokeCap.Round, join = StrokeJoin.Round)
+                onDrawBehind { drawPath(path, color, style = style) }
+            },
+    )
 }
 
 /** A cog wheel with [teeth] teeth around a punched-out hub: a "settings" glyph. */
