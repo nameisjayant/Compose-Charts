@@ -55,6 +55,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Pill-shaped progress bars under a profile row, with a short description",
                 category = "Bar",
             ),
+            ChartSample(
+                id = ChartSample.RANKED_BAR,
+                title = "Ranked bar",
+                description = "A labelled staircase of bars, longest first, shading from navy to sky",
+                category = "Bar",
+            ),
         )
     }
 }

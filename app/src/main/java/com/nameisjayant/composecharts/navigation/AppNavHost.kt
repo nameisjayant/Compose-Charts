@@ -11,6 +11,7 @@ import com.nameisjayant.composecharts.feature.arearange.AreaRangeLineRoute
 import com.nameisjayant.composecharts.feature.donut.DonutRoute
 import com.nameisjayant.composecharts.feature.doughnut.DoughnutRoute
 import com.nameisjayant.composecharts.feature.horizontalbar.HorizontalBarRoute
+import com.nameisjayant.composecharts.feature.rankedbar.RankedBarRoute
 import com.nameisjayant.composecharts.feature.showcase.ShowcaseRoute
 import com.nameisjayant.composecharts.feature.splinearea.SplineAreaRoute
 import com.nameisjayant.composecharts.feature.stackedbar.StackedBarRoute
@@ -32,6 +33,7 @@ fun AppNavHost() {
         ChartSample.SPLINE_AREA -> SplineAreaRoute(onBack = closeSample)
         ChartSample.STACKED_BAR -> StackedBarRoute(onBack = closeSample)
         ChartSample.HORIZONTAL_BAR -> HorizontalBarRoute(onBack = closeSample)
+        ChartSample.RANKED_BAR -> RankedBarRoute(onBack = closeSample)
         else -> ShowcaseRoute(onOpenSample = { openSampleId = it })
     }
 }

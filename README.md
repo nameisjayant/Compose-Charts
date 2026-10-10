@@ -66,6 +66,15 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
   <tr>
     <td>Pill-shaped progress bars under a profile row.</td>
   </tr>
+  <tr>
+    <th>Ranked bar</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/ranked-bar.gif" width="380" alt="Animated ranked bar chart" /></td>
+  </tr>
+  <tr>
+    <td>A labelled staircase of bars, longest first, from navy to sky.</td>
+  </tr>
 </table>
 
 ## Features
@@ -88,6 +97,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Spline area** | `SplineAreaChart`, `SplineAreaChartCard` | A thick smoothed line over a fading fill, edge to edge, under a headline value, change badge and action tile |
 | **Stacked bar** | `StackedBarChart`, `StackedBarChartCard` | Any number of series stacked per bar, rounded stack ends, a title icon, a description and a trend label |
 | **Horizontal bar** | `HorizontalBarChart`, `HorizontalBarChartCard` | Pill-shaped fills over lighter tracks, a profile row with avatar and action button, and a clipped description |
+| **Ranked bar** | `RankedBarChart`, `RankedBarChartCard` | Flush bars sorted longest first in a shaded palette, labels inside each bar in a contrasting colour, a list header and a footer note |
 
 More charts are on the way.
 
@@ -384,6 +394,41 @@ HorizontalBarChart(
 ```
 
 Each bar is a dark fill (`value`) drawn over a lighter track (`total`). The chart sets its own height from the number of bars, `barHeight` and `barSpacing`, so only give it a width. The longest track fills the width unless you pass `maxValue`. Bars are pills by default; pass `HorizontalBarChartDefaults.style(cornerRadius = 4.dp)` for squarer ends. The profile row is left out when `avatar`, `name`, `role` and `action` are all `null`, and the description is cut off after two lines (`HorizontalBarChartCardDefaults.style(descriptionMaxLines = …)`).
+
+### Ranked bar
+
+```kotlin
+val bars = listOf(
+    RankedBar(label = "Norway", value = 89f),
+    RankedBar(label = "Australia", value = 81f),
+    RankedBar(label = "Switzerland", value = 74f),
+    RankedBar(label = "Canada", value = 35f),
+)
+```
+
+**Chart card**
+
+```kotlin
+RankedBarChartCard(
+    title = "Average of the first economies",
+    bars = bars,
+    description = "Economy score of the leading countries, highest first.",
+    listTitle = "List of countries",
+    listCaption = "${bars.size} countries",
+    footer = "Scores are an index out of 100.",
+)
+```
+
+**Chart only**
+
+```kotlin
+RankedBarChart(
+    bars = bars,
+    modifier = Modifier.fillMaxWidth(),
+)
+```
+
+Bars are sorted by value, longest on top, and drawn flush so they form a staircase. Each one takes the next colour of `RankedBarChartDefaults.Colors` (navy to pale sky); pass your own list with `RankedBarChartDefaults.style(colors = …)`, or give a single bar a `color`. Labels are written inside the bars in white or black, whichever reads better on that colour, and move just past the bar's end when they don't fit (`outsideLabelColor`). The chart sets its own height from the number of bars and `barHeight`, so only give it a width. The longest bar fills the width unless you pass `maxValue`. The list header row is left out when `listTitle` and `listCaption` are both `null`.
 
 ### Styling
 

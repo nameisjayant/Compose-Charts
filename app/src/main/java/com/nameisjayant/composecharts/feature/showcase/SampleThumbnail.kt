@@ -10,6 +10,9 @@ import com.nameisjayant.charts.bar.BarSeries
 import com.nameisjayant.charts.bar.HorizontalBar
 import com.nameisjayant.charts.bar.HorizontalBarChart
 import com.nameisjayant.charts.bar.HorizontalBarChartDefaults
+import com.nameisjayant.charts.bar.RankedBar
+import com.nameisjayant.charts.bar.RankedBarChart
+import com.nameisjayant.charts.bar.RankedBarChartDefaults
 import com.nameisjayant.charts.bar.StackedBarChart
 import com.nameisjayant.charts.bar.StackedBarChartDefaults
 import com.nameisjayant.charts.bar.VerticalBarChart
@@ -29,6 +32,7 @@ import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.DoughnutSampleData
 import com.nameisjayant.composecharts.data.HorizontalBarSampleData
+import com.nameisjayant.composecharts.data.RankedBarSampleData
 import com.nameisjayant.composecharts.data.SplineAreaSampleData
 import com.nameisjayant.composecharts.data.StackedBarSampleData
 import com.nameisjayant.composecharts.data.VerticalBarSampleData
@@ -115,6 +119,11 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
         ChartSample.HORIZONTAL_BAR -> HorizontalBarChart(
             bars = HorizontalBarSampleData.done.zip(HorizontalBarSampleData.assigned, ::HorizontalBar),
             style = HorizontalBarChartDefaults.style(barHeight = 8.dp, barSpacing = 4.dp),
+            modifier = modifier.fillMaxWidth(),
+        )
+        ChartSample.RANKED_BAR -> RankedBarChart(
+            bars = RankedBarSampleData.scores.map { RankedBar(label = "", value = it) },
+            style = RankedBarChartDefaults.style(barHeight = 7.dp, cornerRadius = 2.dp, showLabels = false),
             modifier = modifier.fillMaxWidth(),
         )
     }
