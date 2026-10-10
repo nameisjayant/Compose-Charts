@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -135,13 +136,17 @@ public fun ChartCard(
 
 /** The background, border, elevation and padding of a [ChartCard], for cards with their own layout. */
 internal fun Modifier.chartCardFrame(style: ChartCardStyle): Modifier = this
+    .chartCardSurface(style)
+    .padding(style.contentPadding)
+
+/** [chartCardFrame] without the padding, for cards whose sections pad themselves. */
+internal fun Modifier.chartCardSurface(style: ChartCardStyle): Modifier = this
     .shadow(elevation = style.elevation, shape = style.shape)
     .clip(style.shape)
     .background(color = style.backgroundColor, shape = style.shape)
     .then(
         if (style.border != null) Modifier.border(style.border, style.shape) else Modifier,
     )
-    .padding(style.contentPadding)
 
 /** Three vertically stacked dots, the usual "more options" glyph for a [ChartCard] action. */
 @Composable
@@ -179,6 +184,22 @@ public fun ChartFilterIcon(
         drawLine(color, Offset(half, upperY), Offset(size.width - half, upperY), thickness, StrokeCap.Round)
         val lowerStart = size.width * (1f - lowerBarFraction.coerceIn(0f, 1f)) + half
         drawLine(color, Offset(lowerStart, lowerY), Offset(size.width - half, lowerY), thickness, StrokeCap.Round)
+    }
+}
+
+/** A ring around a smaller ring: a "doughnut chart" glyph. */
+@Composable
+public fun ChartDoughnutIcon(
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF000000),
+    size: Dp = 24.dp,
+    strokeWidth: Dp = 2.5.dp,
+) {
+    Canvas(modifier = modifier.size(size)) {
+        val stroke = Stroke(width = strokeWidth.toPx())
+        val outerRadius = (this.size.minDimension - stroke.width) / 2
+        drawCircle(color = color, radius = outerRadius, style = stroke)
+        drawCircle(color = color, radius = outerRadius * 0.45f, style = stroke)
     }
 }
 

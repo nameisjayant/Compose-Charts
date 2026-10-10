@@ -31,6 +31,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Rounded segments filling a share of a ring, with a summary below",
                 category = "Pie",
             ),
+            ChartSample(
+                id = ChartSample.DOUGHNUT,
+                title = "Doughnut",
+                description = "Segments that thicken around a shaded hole, with a profile footer",
+                category = "Pie",
+            ),
         )
     }
 }

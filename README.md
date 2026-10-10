@@ -51,6 +51,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Vertical bar** | `VerticalBarChart`, `VerticalBarChartCard` | One or two series (up and down from a baseline), pill-shaped bars, grid lines |
 | **Area range and line** | `AreaRangeLineChart`, `AreaRangeLineChartCard` | Smoothed line, fading ribbon, data points, axis ranges and label formatters |
 | **Donut** | `DonutChart`, `DonutChartCard` | Rounded overlapping segments on a track, animated percentage in the centre, side legend and a summary row |
+| **Doughnut** | `DoughnutChart`, `DoughnutChartCard` | Segments that get thicker one after another, a shaded hole, a tinted header and a footer slot |
 
 More charts are on the way.
 
@@ -92,45 +93,86 @@ compose-charts = { group = "io.github.nameisjayant", name = "compose-charts", ve
 
 ## Usage
 
+Every chart comes in two versions:
+
+- **`XxxChartCard`**: the chart inside a ready-made card, with a title, subtitle, legend and action slot.
+- **`XxxChart`**: the bare chart, with no card frame, to put inside your own layout. Give it a size with `modifier`.
+
 ### Vertical bar
+
+```kotlin
+val upperSeries = BarSeries(
+    label = "Data one",
+    values = listOf(90f, 24f, 63f, 39f, 46f, 49f, 61f),
+    color = VerticalBarChartDefaults.UpperBarColor,
+)
+val lowerSeries = BarSeries(
+    label = "Data two",
+    values = listOf(14f, 32f, 20f, 28f, 45f, 32f, 28f),
+    color = VerticalBarChartDefaults.LowerBarColor,
+)
+```
+
+**Chart card**
 
 ```kotlin
 VerticalBarChartCard(
     title = "Vertical bar",
     subtitle = "Statistics of the month",
-    upperSeries = BarSeries(
-        label = "Data one",
-        values = listOf(90f, 24f, 63f, 39f, 46f, 49f, 61f),
-        color = VerticalBarChartDefaults.UpperBarColor,
-    ),
-    lowerSeries = BarSeries(
-        label = "Data two",
-        values = listOf(14f, 32f, 20f, 28f, 45f, 32f, 28f),
-        color = VerticalBarChartDefaults.LowerBarColor,
-    ),
+    upperSeries = upperSeries,
+    lowerSeries = lowerSeries,
     chartStyle = VerticalBarChartDefaults.style(barWidth = 24.dp),
+)
+```
+
+**Chart only**
+
+```kotlin
+VerticalBarChart(
+    upperSeries = upperSeries,
+    lowerSeries = lowerSeries,
+    modifier = Modifier.fillMaxWidth().height(160.dp),
+    style = VerticalBarChartDefaults.style(barWidth = 24.dp),
 )
 ```
 
 ### Area range and line
 
 ```kotlin
+val series = AreaRangeLineSeries(
+    label = "Temperature",
+    points = listOf(
+        LinePoint(x = -77f, y = 75f),
+        LinePoint(x = -39f, y = 53f),
+        LinePoint(x = -66f, y = 24f),
+        LinePoint(x = -40f, y = 14f),
+        LinePoint(x = -17f, y = 5f),
+    ),
+    lineColor = AreaRangeLineChartDefaults.LineColor,
+    bandColor = AreaRangeLineChartDefaults.BandColor,
+    pointColor = AreaRangeLineChartDefaults.PointColor,
+)
+```
+
+**Chart card**
+
+```kotlin
 AreaRangeLineChartCard(
     title = "Temperatures",
     subtitle = "Average temperatures for July",
-    series = AreaRangeLineSeries(
-        label = "Temperature",
-        points = listOf(
-            LinePoint(x = -77f, y = 75f),
-            LinePoint(x = -39f, y = 53f),
-            LinePoint(x = -66f, y = 24f),
-            LinePoint(x = -40f, y = 14f),
-            LinePoint(x = -17f, y = 5f),
-        ),
-        lineColor = AreaRangeLineChartDefaults.LineColor,
-        bandColor = AreaRangeLineChartDefaults.BandColor,
-        pointColor = AreaRangeLineChartDefaults.PointColor,
-    ),
+    series = series,
+    xRange = AxisRange(min = -80f, max = -10f, step = 10f),
+    yRange = AxisRange(min = 0f, max = 75f, step = 25f),
+    yLabelFormatter = { "${it.roundToInt()} km" },
+)
+```
+
+**Chart only**
+
+```kotlin
+AreaRangeLineChart(
+    series = series,
+    modifier = Modifier.fillMaxWidth().height(220.dp),
     xRange = AxisRange(min = -80f, max = -10f, step = 10f),
     yRange = AxisRange(min = 0f, max = 75f, step = 25f),
     yLabelFormatter = { "${it.roundToInt()} km" },
@@ -142,14 +184,20 @@ Points are joined in list order, so the line can run top to bottom, as in the al
 ### Donut
 
 ```kotlin
+val segments = listOf(
+    DonutSegment("Documents", 22f, DonutChartDefaults.DocumentsColor),
+    DonutSegment("Photos", 47f, DonutChartDefaults.PhotosColor),
+    DonutSegment("Music", 38f, DonutChartDefaults.MusicColor),
+    DonutSegment("Videos", 30f, DonutChartDefaults.VideosColor),
+)
+```
+
+**Chart card**
+
+```kotlin
 DonutChartCard(
     title = "Storage of your device",
-    segments = listOf(
-        DonutSegment("Documents", 22f, DonutChartDefaults.DocumentsColor),
-        DonutSegment("Photos", 47f, DonutChartDefaults.PhotosColor),
-        DonutSegment("Music", 38f, DonutChartDefaults.MusicColor),
-        DonutSegment("Videos", 30f, DonutChartDefaults.VideosColor),
-    ),
+    segments = segments,
     maxValue = 178f,
     caption = "Used storage",
     value = "137GB",
@@ -157,11 +205,55 @@ DonutChartCard(
 )
 ```
 
+**Chart only**
+
+```kotlin
+DonutChart(
+    segments = segments,
+    modifier = Modifier.size(160.dp),
+    maxValue = 178f,
+)
+```
+
 With `maxValue` the ring works as a gauge: the segments fill 137 of 178, and the centre shows `77%`. Leave it out and the segments share the whole ring. Use `centerLabelFormatter` to change the centre text, and `DonutChartDefaults.style(startAngle = -90f)` to start at 12 o'clock.
+
+### Doughnut
+
+```kotlin
+val segments = listOf(
+    DonutSegment("css", 11f, DoughnutChartDefaults.CssColor),
+    DonutSegment("html", 12f, DoughnutChartDefaults.HtmlColor),
+    DonutSegment("sass", 50f, DoughnutChartDefaults.SassColor),
+)
+```
+
+**Chart card**
+
+```kotlin
+DoughnutChartCard(
+    title = "Doughnut",
+    subtitle = "Browser market shares at a specific website, 2014",
+    segments = segments,
+    maxValue = 100f,
+    footer = { /* e.g. an avatar, a name and a profile button */ },
+)
+```
+
+**Chart only**
+
+```kotlin
+DoughnutChart(
+    segments = segments,
+    modifier = Modifier.size(200.dp),
+    maxValue = 100f,
+)
+```
+
+Each segment is a little thicker than the one before, and the last one reaches the edge. The segments run clockwise and finish at 12 o'clock, so the empty track sits just before it, and the centre shows the filled share (`73%`). Use `DoughnutChartDefaults.style(endAngle = ..., firstSegmentRadiusFraction = ..., holeRadiusFraction = ...)` to move the end point, change how much the segments thicken, or resize the hole.
 
 ### Styling
 
-Every chart has three style layers: the card, the legend and the chart itself.
+Every chart card has three style layers: the card, the legend and the chart itself.
 
 ```kotlin
 VerticalBarChartCard(
@@ -180,14 +272,7 @@ VerticalBarChartCard(
 )
 ```
 
-To leave out the card frame, use the bare chart:
-
-```kotlin
-VerticalBarChart(
-    upperSeries = series,
-    modifier = Modifier.fillMaxWidth().height(160.dp),
-)
-```
+The bare chart takes only the chart layer, through its `style` parameter (`VerticalBarChart(style = VerticalBarChartDefaults.style(...))`).
 
 ## Sample app
 

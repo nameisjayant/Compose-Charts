@@ -11,14 +11,18 @@ import com.nameisjayant.charts.bar.VerticalBarChartDefaults
 import com.nameisjayant.charts.donut.DonutChart
 import com.nameisjayant.charts.donut.DonutChartDefaults
 import com.nameisjayant.charts.donut.DonutSegment
+import com.nameisjayant.charts.donut.DoughnutChart
+import com.nameisjayant.charts.donut.DoughnutChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineChart
 import com.nameisjayant.charts.line.AreaRangeLineChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineSeries
 import com.nameisjayant.composecharts.data.AreaRangeSampleData
 import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
+import com.nameisjayant.composecharts.data.DoughnutSampleData
 import com.nameisjayant.composecharts.data.VerticalBarSampleData
 import com.nameisjayant.composecharts.feature.donut.donutPalette
+import com.nameisjayant.composecharts.feature.doughnut.doughnutPalette
 
 /** A live, miniature rendering of a sample's chart for its showcase tile. */
 @Composable
@@ -62,6 +66,21 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
                 style = DonutChartDefaults.style(
                     strokeWidth = 12.dp,
                     trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    showCenterLabel = false,
+                ),
+                modifier = modifier.fillMaxSize(),
+            )
+        }
+        ChartSample.DOUGHNUT -> {
+            val palette = doughnutPalette()
+            DoughnutChart(
+                segments = DoughnutSampleData.shares.mapIndexed { index, value -> DonutSegment("", value, palette[index]) },
+                maxValue = DoughnutSampleData.TOTAL,
+                style = DoughnutChartDefaults.style(
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    cornerRadius = 2.dp,
+                    holeColor = MaterialTheme.colorScheme.surface,
+                    holeShadowWidth = 3.dp,
                     showCenterLabel = false,
                 ),
                 modifier = modifier.fillMaxSize(),
