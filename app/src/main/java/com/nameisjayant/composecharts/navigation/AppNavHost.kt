@@ -11,6 +11,7 @@ import com.nameisjayant.composecharts.feature.arearange.AreaRangeLineRoute
 import com.nameisjayant.composecharts.feature.donut.DonutRoute
 import com.nameisjayant.composecharts.feature.doughnut.DoughnutRoute
 import com.nameisjayant.composecharts.feature.horizontalbar.HorizontalBarRoute
+import com.nameisjayant.composecharts.feature.floatingbar.FloatingBarRoute
 import com.nameisjayant.composecharts.feature.mirroredarea.MirroredAreaRoute
 import com.nameisjayant.composecharts.feature.overlappingarea.OverlappingAreaRoute
 import com.nameisjayant.composecharts.feature.rankedbar.RankedBarRoute
@@ -40,6 +41,7 @@ fun AppNavHost() {
         ChartSample.OVERLAPPING_AREA -> OverlappingAreaRoute(onBack = closeSample)
         ChartSample.MIRRORED_AREA -> MirroredAreaRoute(onBack = closeSample)
         ChartSample.STACKED_COLUMN -> StackedColumnRoute(onBack = closeSample)
+        ChartSample.FLOATING_BAR -> FloatingBarRoute(onBack = closeSample)
         else -> ShowcaseRoute(onOpenSample = { openSampleId = it })
     }
 }

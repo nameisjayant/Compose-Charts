@@ -69,17 +69,17 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
   <tr>
     <th width="33%">Mirrored area</th>
     <th width="33%">Stacked column</th>
-    <th width="33%"></th>
+    <th width="33%">Floating bar</th>
   </tr>
   <tr>
     <td valign="top"><img src="docs/gifs/mirrored-area.gif" width="260" alt="Animated mirrored area chart" /></td>
     <td valign="top"><img src="docs/gifs/stacked-column.gif" width="260" alt="Animated stacked column chart" /></td>
-    <td valign="top"></td>
+    <td valign="top"><img src="docs/gifs/floating-bar.gif" width="260" alt="Animated floating bar chart" /></td>
   </tr>
   <tr>
     <td valign="top">Smooth layered waves above and below a baseline, with a row of zone swatches.</td>
     <td valign="top">Two series side by side in each column, with month tabs and a profile footer.</td>
-    <td valign="top"></td>
+    <td valign="top">Bars spanning a low to a high value over a dashed grid, with time range chips.</td>
   </tr>
 </table>
 
@@ -107,6 +107,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Overlapping area** | `OverlappingAreaChart`, `OverlappingAreaChartCard` | Translucent straight-edged areas laid over each other, a coloured header, filter chips, a legend, a profile row and a footer note |
 | **Mirrored area** | `MirroredAreaChart`, `MirroredAreaChartCard` | Smooth translucent layers growing up and down from a shared baseline, a dated header, overlapping zone swatches and a summary value |
 | **Stacked column** | `StackedColumnChart`, `StackedColumnChartCard` | Flush side-by-side stripes per column, a glowing sparkline, selectable tabs, a legend and a tinted profile footer |
+| **Floating bar** | `FloatingBarChart`, `FloatingBarChartCard` | Pill-shaped bars from a low to a high value, each in its own colour, dashed grid lines with `8k`-style labels, a caption and time range chips |
 
 More charts are on the way.
 
@@ -554,6 +555,43 @@ StackedColumnChart(
 ```
 
 Each column holds value `i` of every series as a stripe, side by side, with the first series on the left. Stripes split the column's width and each is as tall as its own value. Columns are spread edge to edge, and the tallest value reaches the top unless you pass `maxValue`. `StackedColumnChartDefaults.style(...)` sets `columnSpacing`, `seriesSpacing` (0 keeps the stripes flush) and `maxColumnWidth`. In the card, the default `action` is a glowing `StackedColumnSparkline`. The tab row is left out when `tabs` is empty, and the profile footer when `avatar`, `name`, `role` and `profileAction` are all `null`. Tabs can only be tapped when `onTabSelected` is given. Tab and footer colours live in `StackedColumnChartCardDefaults.style(...)`. `ChartSparkIcon` also takes `haloColor` and `haloWidth` if you want its glow elsewhere.
+
+### Floating bar
+
+```kotlin
+val bars = listOf(
+    FloatingBar(low = 2800f, high = 5000f, color = FloatingBarChartDefaults.PrimaryColor),
+    FloatingBar(low = 1800f, high = 3000f, color = FloatingBarChartDefaults.LightColor),
+    FloatingBar(low = 500f, high = 5000f, color = FloatingBarChartDefaults.AccentColor),
+)
+```
+
+**Chart card**
+
+```kotlin
+var range by remember { mutableIntStateOf(2) }
+FloatingBarChartCard(
+    title = "Statistic",
+    description = "Minim dolor in amet nulla laboris enim dolore consequatt.",
+    bars = bars,
+    action = { ChartCircleButton(onClick = {}) { ChartSortIcon() } },
+    caption = "Year 2021",
+    ranges = listOf("24h", "1d", "3d", "1w", "3w", "1m"),
+    selectedRange = range,
+    onRangeSelected = { range = it },
+)
+```
+
+**Chart only**
+
+```kotlin
+FloatingBarChart(
+    bars = bars,
+    modifier = Modifier.fillMaxWidth().height(168.dp),
+)
+```
+
+Each bar spans from its `low` to its `high` value instead of standing on the baseline, and takes its own colour. The axis runs from 0 to `maxValue` in `gridSteps` equal steps (4 by default). Without `maxValue`, the highest value is rounded up so every step is a round number (1, 2, 2.5 or 5 × 10ⁿ). Labels go through `labelFormatter`, which defaults to `FloatingBarChartDefaults.formatValue` (`8000f` becomes `8k`). Bars are spread edge to edge across the grid and grow out from their middles when they animate in. `FloatingBarChartDefaults.style(...)` sets `barWidth`, `barInset`, the grid's colour and dash (`gridDashLength = 0.dp` draws solid lines) and the label style. In the card, the chip row is left out when `ranges` is empty, and chips can only be tapped when `onRangeSelected` is given. Chip colours live in `FloatingBarChartCardDefaults.style(...)`. `ChartSortIcon` is the three-line glyph from the header.
 
 ### Styling
 

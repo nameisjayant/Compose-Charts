@@ -79,6 +79,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Two series side by side in each column, with month tabs and a profile footer",
                 category = "Bar",
             ),
+            ChartSample(
+                id = ChartSample.FLOATING_BAR,
+                title = "Floating bar",
+                description = "Bars spanning a low to a high value over a dashed grid, with time range chips",
+                category = "Bar",
+            ),
         )
     }
 }

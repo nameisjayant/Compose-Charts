@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nameisjayant.charts.bar.BarSeries
+import com.nameisjayant.charts.bar.FloatingBarChart
+import com.nameisjayant.charts.bar.FloatingBarChartDefaults
 import com.nameisjayant.charts.bar.HorizontalBar
 import com.nameisjayant.charts.bar.HorizontalBarChart
 import com.nameisjayant.charts.bar.HorizontalBarChartDefaults
@@ -38,6 +40,7 @@ import com.nameisjayant.composecharts.data.AreaRangeSampleData
 import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.DoughnutSampleData
+import com.nameisjayant.composecharts.data.FloatingBarSampleData
 import com.nameisjayant.composecharts.data.HorizontalBarSampleData
 import com.nameisjayant.composecharts.data.MirroredAreaSampleData
 import com.nameisjayant.composecharts.data.OverlappingAreaSampleData
@@ -48,6 +51,7 @@ import com.nameisjayant.composecharts.data.StackedColumnSampleData
 import com.nameisjayant.composecharts.data.VerticalBarSampleData
 import com.nameisjayant.composecharts.feature.donut.donutPalette
 import com.nameisjayant.composecharts.feature.doughnut.doughnutPalette
+import com.nameisjayant.composecharts.feature.floatingbar.floatingBars
 import com.nameisjayant.composecharts.feature.stackedbar.stackedBarPalette
 import com.nameisjayant.composecharts.feature.stackedcolumn.stackedColumnPalette
 
@@ -162,6 +166,21 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
                     BarSeries("", StackedColumnSampleData.bananas[month], palette[1]),
                 ),
                 style = StackedColumnChartDefaults.style(columnSpacing = 6.dp),
+                modifier = modifier.fillMaxSize(),
+            )
+        }
+        ChartSample.FLOATING_BAR -> {
+            val range = FloatingBarSampleData.DEFAULT_RANGE
+            FloatingBarChart(
+                bars = floatingBars(FloatingBarSampleData.lows[range], FloatingBarSampleData.highs[range]),
+                style = FloatingBarChartDefaults.style(
+                    barWidth = 6.dp,
+                    barInset = 0.dp,
+                    showAxisLabels = false,
+                    gridLineColor = MaterialTheme.colorScheme.outlineVariant,
+                    gridDashLength = 3.dp,
+                    gridGapLength = 3.dp,
+                ),
                 modifier = modifier.fillMaxSize(),
             )
         }

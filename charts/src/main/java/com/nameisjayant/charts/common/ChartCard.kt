@@ -255,6 +255,37 @@ public fun ChartFilterIcon(
     }
 }
 
+/** Centred bars stacked vertically, each shorter than the one above: a "sort" or "filter" glyph. */
+@Composable
+public fun ChartSortIcon(
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF000000),
+    width: Dp = 20.dp,
+    barThickness: Dp = 2.5.dp,
+    barSpacing: Dp = 3.5.dp,
+    /** Length of each bar, top to bottom, as a fraction of [width]. */
+    barFractions: List<Float> = listOf(1f, 0.7f, 0.4f),
+) {
+    val count = barFractions.size
+    val height = barThickness * count + barSpacing * (count - 1).coerceAtLeast(0)
+    Canvas(modifier = modifier.size(DpSize(width = width, height = height))) {
+        val thickness = barThickness.toPx()
+        val half = thickness / 2
+        val step = thickness + barSpacing.toPx()
+        barFractions.forEachIndexed { index, fraction ->
+            val length = (size.width - thickness) * fraction.coerceIn(0f, 1f)
+            val y = half + step * index
+            drawLine(
+                color = color,
+                start = Offset((size.width - length) / 2, y),
+                end = Offset((size.width + length) / 2, y),
+                strokeWidth = thickness,
+                cap = StrokeCap.Round,
+            )
+        }
+    }
+}
+
 /** A ring around a smaller ring: a "doughnut chart" glyph. */
 @Composable
 public fun ChartDoughnutIcon(
