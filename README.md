@@ -66,6 +66,21 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
     <td valign="top">A labelled staircase of bars, longest first, from navy to sky.</td>
     <td valign="top">Two translucent years laid over each other under a coloured header.</td>
   </tr>
+  <tr>
+    <th width="33%">Mirrored area</th>
+    <th width="33%"></th>
+    <th width="33%"></th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/mirrored-area.gif" width="260" alt="Animated mirrored area chart" /></td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top">Smooth layered waves above and below a baseline, with a row of zone swatches.</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
 </table>
 
 ## Features
@@ -90,6 +105,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Horizontal bar** | `HorizontalBarChart`, `HorizontalBarChartCard` | Pill-shaped fills over lighter tracks, a profile row with avatar and action button, and a clipped description |
 | **Ranked bar** | `RankedBarChart`, `RankedBarChartCard` | Flush bars sorted longest first in a shaded palette, labels inside each bar in a contrasting colour, a list header and a footer note |
 | **Overlapping area** | `OverlappingAreaChart`, `OverlappingAreaChartCard` | Translucent straight-edged areas laid over each other, a coloured header, filter chips, a legend, a profile row and a footer note |
+| **Mirrored area** | `MirroredAreaChart`, `MirroredAreaChartCard` | Smooth translucent layers growing up and down from a shared baseline, a dated header, overlapping zone swatches and a summary value |
 
 More charts are on the way.
 
@@ -460,6 +476,45 @@ OverlappingAreaChart(
 ```
 
 Each series joins its values with straight lines, spread evenly from edge to edge, and is filled down to 0 at the bottom. Series are drawn in order, so the last is on top; give their colours some transparency (as `FirstColor` and `SecondColor` do) so the areas behind show through and overlaps read darker. The tallest value of any series reaches the top unless you pass `maxValue`. Pass `OverlappingAreaChartDefaults.style(lineWidth = 2.dp)` to outline each area's top edge. The filter row is left out when `filters` is empty and the profile row when `avatar`, `name`, `role` and `profileAction` are all `null`; filters are only tappable when `onFilterSelected` is given. The header colour, chip colours and spacings live in `OverlappingAreaChartCardDefaults.style(...)`.
+
+### Mirrored area
+
+```kotlin
+val upper = listOf(
+    AreaSeries(label = "Zone 4", values = listOf(60f, 30f, 75f, 85f, 40f, 100f), color = MirroredAreaChartDefaults.UpperColors[0]),
+    AreaSeries(label = "Zone 1", values = listOf(12f, 8f, 20f, 25f, 15f, 12f), color = MirroredAreaChartDefaults.UpperColors[3]),
+)
+val lower = listOf(
+    AreaSeries(label = "Zone 5", values = listOf(60f, 45f, 70f, 50f, 95f, 40f), color = MirroredAreaChartDefaults.LowerColors[0]),
+    AreaSeries(label = "Zone 3", values = listOf(30f, 45f, 22f, 50f, 28f, 55f), color = MirroredAreaChartDefaults.LowerColors[2]),
+)
+```
+
+**Chart card**
+
+```kotlin
+MirroredAreaChartCard(
+    title = "Intensity",
+    subtitle = "September 2021",
+    description = "Time spent in each heart-rate zone, day by day.",
+    upperSeries = upper,
+    lowerSeries = lower,
+    summaryLabel = "Intensity zones",
+    summaryValue = "80%",
+)
+```
+
+**Chart only**
+
+```kotlin
+MirroredAreaChart(
+    upperSeries = upper,
+    lowerSeries = lower,
+    modifier = Modifier.fillMaxWidth().height(240.dp),
+)
+```
+
+`upperSeries` grow up from the baseline and `lowerSeries` hang down from it, each joined with a smooth curve and spread edge to edge. Within each half the last series is drawn in front, so put the tallest first and give the colours some transparency (`UpperColors` and `LowerColors` are ready-made, back to front). Both halves share one scale: the tallest value of any series reaches the edge unless you pass `maxValue`. `MirroredAreaChartDefaults.style(...)` sets the `smoothing` (0 for straight lines), the share of height above the baseline (`upperFraction`) and the baseline colour. In the card, the chart runs to the card's edges; the footer's overlapping `swatches` default to `MirroredAreaChartDefaults.ZoneColors`, and the footer is left out when `summaryLabel`, `summaryValue`, `swatches` and `action` are all empty. Set `swatchBorderColor` in `MirroredAreaChartCardDefaults.style(...)` to your card's background.
 
 ### Styling
 

@@ -187,7 +187,7 @@ internal object OverlappingAreaGeometry {
 }
 
 /** The values of every series and the scale shown at one end of an animation. */
-private data class AreaFrame(
+internal data class AreaFrame(
     val values: List<List<Float>>,
     val max: Float,
 ) {

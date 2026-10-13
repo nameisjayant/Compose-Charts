@@ -67,6 +67,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Two translucent years laid over each other, with region filters and a profile row",
                 category = "Line",
             ),
+            ChartSample(
+                id = ChartSample.MIRRORED_AREA,
+                title = "Mirrored area",
+                description = "Smooth layered waves above and below a baseline, with a row of zone swatches",
+                category = "Line",
+            ),
         )
     }
 }

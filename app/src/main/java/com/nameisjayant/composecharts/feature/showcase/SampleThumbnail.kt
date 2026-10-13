@@ -26,6 +26,8 @@ import com.nameisjayant.charts.line.AreaRangeLineChart
 import com.nameisjayant.charts.line.AreaRangeLineChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineSeries
 import com.nameisjayant.charts.line.AreaSeries
+import com.nameisjayant.charts.line.MirroredAreaChart
+import com.nameisjayant.charts.line.MirroredAreaChartDefaults
 import com.nameisjayant.charts.line.OverlappingAreaChart
 import com.nameisjayant.charts.line.OverlappingAreaChartDefaults
 import com.nameisjayant.charts.line.SplineAreaChart
@@ -35,6 +37,7 @@ import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.DoughnutSampleData
 import com.nameisjayant.composecharts.data.HorizontalBarSampleData
+import com.nameisjayant.composecharts.data.MirroredAreaSampleData
 import com.nameisjayant.composecharts.data.OverlappingAreaSampleData
 import com.nameisjayant.composecharts.data.RankedBarSampleData
 import com.nameisjayant.composecharts.data.SplineAreaSampleData
@@ -135,6 +138,15 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
                 AreaSeries("", OverlappingAreaSampleData.first[0], OverlappingAreaChartDefaults.FirstColor),
                 AreaSeries("", OverlappingAreaSampleData.second[0], OverlappingAreaChartDefaults.SecondColor),
             ),
+            modifier = modifier.fillMaxSize(),
+        )
+        ChartSample.MIRRORED_AREA -> MirroredAreaChart(
+            upperSeries = MirroredAreaSampleData.upper.mapIndexed { index, values ->
+                AreaSeries("", values, MirroredAreaChartDefaults.UpperColors[index])
+            },
+            lowerSeries = MirroredAreaSampleData.lower.mapIndexed { index, values ->
+                AreaSeries("", values, MirroredAreaChartDefaults.LowerColors[index])
+            },
             modifier = modifier.fillMaxSize(),
         )
     }
