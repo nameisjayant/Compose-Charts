@@ -54,14 +54,17 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
   <tr>
     <th width="33%">Horizontal bar</th>
     <th width="33%">Ranked bar</th>
+    <th width="33%">Overlapping area</th>
   </tr>
   <tr>
     <td valign="top"><img src="docs/gifs/horizontal-bar.gif" width="260" alt="Animated horizontal bar chart" /></td>
     <td valign="top"><img src="docs/gifs/ranked-bar.gif" width="260" alt="Animated ranked bar chart" /></td>
+    <td valign="top"><img src="docs/gifs/overlapping-area.gif" width="260" alt="Animated overlapping area chart" /></td>
   </tr>
   <tr>
     <td valign="top">Pill-shaped progress bars under a profile row.</td>
     <td valign="top">A labelled staircase of bars, longest first, from navy to sky.</td>
+    <td valign="top">Two translucent years laid over each other under a coloured header.</td>
   </tr>
 </table>
 
@@ -86,6 +89,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Stacked bar** | `StackedBarChart`, `StackedBarChartCard` | Any number of series stacked per bar, rounded stack ends, a title icon, a description and a trend label |
 | **Horizontal bar** | `HorizontalBarChart`, `HorizontalBarChartCard` | Pill-shaped fills over lighter tracks, a profile row with avatar and action button, and a clipped description |
 | **Ranked bar** | `RankedBarChart`, `RankedBarChartCard` | Flush bars sorted longest first in a shaded palette, labels inside each bar in a contrasting colour, a list header and a footer note |
+| **Overlapping area** | `OverlappingAreaChart`, `OverlappingAreaChartCard` | Translucent straight-edged areas laid over each other, a coloured header, filter chips, a legend, a profile row and a footer note |
 
 More charts are on the way.
 
@@ -417,6 +421,45 @@ RankedBarChart(
 ```
 
 Bars are sorted by value, longest on top, and drawn flush so they form a staircase. Each one takes the next colour of `RankedBarChartDefaults.Colors` (navy to pale sky); pass your own list with `RankedBarChartDefaults.style(colors = …)`, or give a single bar a `color`. Labels are written inside the bars in white or black, whichever reads better on that colour, and move just past the bar's end when they don't fit (`outsideLabelColor`). The chart sets its own height from the number of bars and `barHeight`, so only give it a width. The longest bar fills the width unless you pass `maxValue`. The list header row is left out when `listTitle` and `listCaption` are both `null`.
+
+### Overlapping area
+
+```kotlin
+val series = listOf(
+    AreaSeries(label = "2011", values = listOf(78f, 40f, 26f, 33f, 0f, 19f, 37f), color = OverlappingAreaChartDefaults.FirstColor),
+    AreaSeries(label = "2012", values = listOf(28f, 98f, 70f, 78f, 60f, 10f, 61f), color = OverlappingAreaChartDefaults.SecondColor),
+)
+```
+
+**Chart card**
+
+```kotlin
+var region by remember { mutableIntStateOf(0) }
+OverlappingAreaChartCard(
+    title = "Estimated Worldwide Population",
+    series = series,
+    filters = listOf("America", "Europe", "Asia"),
+    selectedFilter = region,
+    onFilterSelected = { region = it },
+    description = "Population index per month, 2011 laid over 2012.",
+    name = "Ralph Edwards",
+    role = "Team Leader",
+    avatar = { ChartInitialsAvatar(text = "R") },
+    profileAction = { ChartCircleButton(onClick = { /* open chat */ }) { ChartChatIcon() } },
+    footer = "Figures are an index, not head counts.",
+)
+```
+
+**Chart only**
+
+```kotlin
+OverlappingAreaChart(
+    series = series,
+    modifier = Modifier.fillMaxWidth().height(160.dp),
+)
+```
+
+Each series joins its values with straight lines, spread evenly from edge to edge, and is filled down to 0 at the bottom. Series are drawn in order, so the last is on top; give their colours some transparency (as `FirstColor` and `SecondColor` do) so the areas behind show through and overlaps read darker. The tallest value of any series reaches the top unless you pass `maxValue`. Pass `OverlappingAreaChartDefaults.style(lineWidth = 2.dp)` to outline each area's top edge. The filter row is left out when `filters` is empty and the profile row when `avatar`, `name`, `role` and `profileAction` are all `null`; filters are only tappable when `onFilterSelected` is given. The header colour, chip colours and spacings live in `OverlappingAreaChartCardDefaults.style(...)`.
 
 ### Styling
 

@@ -153,20 +153,83 @@ internal fun Modifier.chartCardSurface(style: ChartCardStyle): Modifier = this
         if (style.border != null) Modifier.border(style.border, style.shape) else Modifier,
     )
 
-/** Three vertically stacked dots, the usual "more options" glyph for a [ChartCard] action. */
+/**
+ * Three dots, stacked vertically or side by side when [horizontal]: the usual "more options" glyph
+ * for a [ChartCard] action.
+ */
 @Composable
 public fun ChartOverflowIcon(
     modifier: Modifier = Modifier,
     color: Color = Color(0xFF000000),
     dotSize: Dp = 4.dp,
     dotSpacing: Dp = 4.dp,
+    horizontal: Boolean = false,
 ) {
-    Canvas(modifier = modifier.size(DpSize(width = dotSize, height = dotSize * 3 + dotSpacing * 2))) {
+    val length = dotSize * 3 + dotSpacing * 2
+    val size = if (horizontal) DpSize(width = length, height = dotSize) else DpSize(width = dotSize, height = length)
+    Canvas(modifier = modifier.size(size)) {
         val radius = dotSize.toPx() / 2
         val step = dotSize.toPx() + dotSpacing.toPx()
         repeat(3) { index ->
-            drawCircle(color = color, radius = radius, center = Offset(radius, radius + step * index))
+            val center = if (horizontal) Offset(radius + step * index, radius) else Offset(radius, radius + step * index)
+            drawCircle(color = color, radius = radius, center = center)
         }
+    }
+}
+
+/** An outlined speech bubble with its tail at the bottom left: a "message" glyph. */
+@Composable
+public fun ChartChatIcon(
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF000000),
+    size: Dp = 22.dp,
+    strokeWidth: Dp = 2.dp,
+) {
+    Spacer(
+        modifier = modifier
+            .size(size)
+            .drawWithCache {
+                val stroke = strokeWidth.toPx()
+                val inset = stroke / 2
+                val right = this.size.width - inset
+                val bubbleBottom = this.size.height * 0.75f
+                val corner = this.size.minDimension * 0.12f
+                val path = Path().apply {
+                    moveTo(inset + corner, inset)
+                    lineTo(right - corner, inset)
+                    quadraticTo(right, inset, right, inset + corner)
+                    lineTo(right, bubbleBottom - corner)
+                    quadraticTo(right, bubbleBottom, right - corner, bubbleBottom)
+                    lineTo(this@drawWithCache.size.width * 0.32f, bubbleBottom)
+                    lineTo(inset, this@drawWithCache.size.height - inset)
+                    lineTo(inset, inset + corner)
+                    quadraticTo(inset, inset, inset + corner, inset)
+                    close()
+                }
+                val style = Stroke(width = stroke, cap = StrokeCap.Round, join = StrokeJoin.Round)
+                onDrawBehind { drawPath(path, color, style = style) }
+            },
+    )
+}
+
+/** A filled circle holding an icon, e.g. a [ChartChatIcon] next to a profile. */
+@Composable
+public fun ChartCircleButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    size: Dp = 48.dp,
+    backgroundColor: Color = Color(0xFFF2F2F2),
+    content: @Composable () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .size(size)
+            .clip(CircleShape)
+            .background(backgroundColor)
+            .clickable(role = Role.Button, onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        content()
     }
 }
 

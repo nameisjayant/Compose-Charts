@@ -25,6 +25,9 @@ import com.nameisjayant.charts.donut.DoughnutChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineChart
 import com.nameisjayant.charts.line.AreaRangeLineChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineSeries
+import com.nameisjayant.charts.line.AreaSeries
+import com.nameisjayant.charts.line.OverlappingAreaChart
+import com.nameisjayant.charts.line.OverlappingAreaChartDefaults
 import com.nameisjayant.charts.line.SplineAreaChart
 import com.nameisjayant.charts.line.SplineAreaChartDefaults
 import com.nameisjayant.composecharts.data.AreaRangeSampleData
@@ -32,6 +35,7 @@ import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.DoughnutSampleData
 import com.nameisjayant.composecharts.data.HorizontalBarSampleData
+import com.nameisjayant.composecharts.data.OverlappingAreaSampleData
 import com.nameisjayant.composecharts.data.RankedBarSampleData
 import com.nameisjayant.composecharts.data.SplineAreaSampleData
 import com.nameisjayant.composecharts.data.StackedBarSampleData
@@ -125,6 +129,13 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
             bars = RankedBarSampleData.scores.map { RankedBar(label = "", value = it) },
             style = RankedBarChartDefaults.style(barHeight = 7.dp, cornerRadius = 2.dp, showLabels = false),
             modifier = modifier.fillMaxWidth(),
+        )
+        ChartSample.OVERLAPPING_AREA -> OverlappingAreaChart(
+            series = listOf(
+                AreaSeries("", OverlappingAreaSampleData.first[0], OverlappingAreaChartDefaults.FirstColor),
+                AreaSeries("", OverlappingAreaSampleData.second[0], OverlappingAreaChartDefaults.SecondColor),
+            ),
+            modifier = modifier.fillMaxSize(),
         )
     }
 }

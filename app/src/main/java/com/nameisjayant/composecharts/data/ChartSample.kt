@@ -17,5 +17,6 @@ data class ChartSample(
         const val STACKED_BAR = "stacked_bar"
         const val HORIZONTAL_BAR = "horizontal_bar"
         const val RANKED_BAR = "ranked_bar"
+        const val OVERLAPPING_AREA = "overlapping_area"
     }
 }

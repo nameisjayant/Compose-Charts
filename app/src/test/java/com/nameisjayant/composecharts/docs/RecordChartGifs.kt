@@ -18,6 +18,8 @@ import com.nameisjayant.composecharts.feature.doughnut.DoughnutScreen
 import com.nameisjayant.composecharts.feature.doughnut.DoughnutViewModel
 import com.nameisjayant.composecharts.feature.horizontalbar.HorizontalBarScreen
 import com.nameisjayant.composecharts.feature.horizontalbar.HorizontalBarViewModel
+import com.nameisjayant.composecharts.feature.overlappingarea.OverlappingAreaScreen
+import com.nameisjayant.composecharts.feature.overlappingarea.OverlappingAreaViewModel
 import com.nameisjayant.composecharts.feature.rankedbar.RankedBarScreen
 import com.nameisjayant.composecharts.feature.rankedbar.RankedBarViewModel
 import com.nameisjayant.composecharts.feature.splinearea.SplineAreaScreen
@@ -122,6 +124,15 @@ class RecordChartGifs {
         record("ranked-bar", shuffle = "Shuffle data") {
             val state by viewModel.state.collectAsState()
             RankedBarScreen(state = state, onIntent = viewModel::onIntent, onBack = {})
+        }
+    }
+
+    @Test
+    fun overlappingArea() {
+        val viewModel = OverlappingAreaViewModel()
+        record("overlapping-area", shuffle = "Shuffle data") {
+            val state by viewModel.state.collectAsState()
+            OverlappingAreaScreen(state = state, onIntent = viewModel::onIntent, onBack = {})
         }
     }
 

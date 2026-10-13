@@ -61,6 +61,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "A labelled staircase of bars, longest first, shading from navy to sky",
                 category = "Bar",
             ),
+            ChartSample(
+                id = ChartSample.OVERLAPPING_AREA,
+                title = "Overlapping area",
+                description = "Two translucent years laid over each other, with region filters and a profile row",
+                category = "Line",
+            ),
         )
     }
 }
