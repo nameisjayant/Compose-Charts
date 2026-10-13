@@ -13,6 +13,9 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 ![Min SDK](https://img.shields.io/badge/minSdk-24-3DDC84?logo=android&logoColor=white)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.nameisjayant/compose-charts?color=2F6FB0)](https://central.sonatype.com/artifact/io.github.nameisjayant/compose-charts)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+[![Docs](https://img.shields.io/badge/docs-website-52B2D6)](https://nameisjayant.github.io/Compose-Charts/)
+
+**[Website and documentation →](https://nameisjayant.github.io/Compose-Charts/)**
 
 </div>
 
@@ -97,6 +100,10 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
     <td valign="top"></td>
   </tr>
 </table>
+
+## Documentation
+
+The full docs live at **[nameisjayant.github.io/Compose-Charts](https://nameisjayant.github.io/Compose-Charts/)**: a getting started guide, plus a page for every chart with a live preview, copyable code for the data, the chart card and the bare chart, and notes on how it behaves.
 
 ## Features
 
@@ -688,7 +695,8 @@ The `:app` module is a showcase app with one screen per chart. Each screen has *
 ```
 ComposeCharts/
 ├── charts/   # The library: chart composables, styles, shared ChartCard and ChartLegend
-└── app/      # Showcase app (Hilt + MVI) that demos every chart
+├── app/      # Showcase app (Hilt + MVI) that demos every chart
+└── docs/     # Documentation website (index.html), chart GIFs and logo
 ```
 
 ## Contributing
@@ -698,6 +706,7 @@ Issues and pull requests are welcome. When you add a chart:
 1. Add the chart composable, its `XxxStyle` and `XxxDefaults`, plus a `XxxChartCard` wrapper in `:charts`.
 2. Add a `ChartSample` entry in `ChartSampleRepository` and a screen in `:app`.
 3. Add a test to `RecordChartGifs` in `:app`, run `./scripts/record-chart-gifs.sh` to render the GIFs into `docs/gifs/` (needs `ffmpeg`), and add the chart to the tables above (the Preview table holds three GIFs per row).
+4. Add an entry to the `CHARTS` list in `docs/index.html` so the chart gets its own page on the website.
 
 ## Publishing a release
 
