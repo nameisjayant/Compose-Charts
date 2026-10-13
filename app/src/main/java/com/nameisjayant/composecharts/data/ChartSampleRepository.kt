@@ -73,6 +73,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Smooth layered waves above and below a baseline, with a row of zone swatches",
                 category = "Line",
             ),
+            ChartSample(
+                id = ChartSample.STACKED_COLUMN,
+                title = "Stacked column",
+                description = "Two series side by side in each column, with month tabs and a profile footer",
+                category = "Bar",
+            ),
         )
     }
 }

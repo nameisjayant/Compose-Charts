@@ -15,6 +15,7 @@ import com.nameisjayant.composecharts.feature.mirroredarea.MirroredAreaRoute
 import com.nameisjayant.composecharts.feature.overlappingarea.OverlappingAreaRoute
 import com.nameisjayant.composecharts.feature.rankedbar.RankedBarRoute
 import com.nameisjayant.composecharts.feature.showcase.ShowcaseRoute
+import com.nameisjayant.composecharts.feature.stackedcolumn.StackedColumnRoute
 import com.nameisjayant.composecharts.feature.splinearea.SplineAreaRoute
 import com.nameisjayant.composecharts.feature.stackedbar.StackedBarRoute
 import com.nameisjayant.composecharts.feature.verticalbar.VerticalBarRoute
@@ -38,6 +39,7 @@ fun AppNavHost() {
         ChartSample.RANKED_BAR -> RankedBarRoute(onBack = closeSample)
         ChartSample.OVERLAPPING_AREA -> OverlappingAreaRoute(onBack = closeSample)
         ChartSample.MIRRORED_AREA -> MirroredAreaRoute(onBack = closeSample)
+        ChartSample.STACKED_COLUMN -> StackedColumnRoute(onBack = closeSample)
         else -> ShowcaseRoute(onOpenSample = { openSampleId = it })
     }
 }

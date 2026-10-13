@@ -68,17 +68,17 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
   </tr>
   <tr>
     <th width="33%">Mirrored area</th>
-    <th width="33%"></th>
+    <th width="33%">Stacked column</th>
     <th width="33%"></th>
   </tr>
   <tr>
     <td valign="top"><img src="docs/gifs/mirrored-area.gif" width="260" alt="Animated mirrored area chart" /></td>
-    <td valign="top"></td>
+    <td valign="top"><img src="docs/gifs/stacked-column.gif" width="260" alt="Animated stacked column chart" /></td>
     <td valign="top"></td>
   </tr>
   <tr>
     <td valign="top">Smooth layered waves above and below a baseline, with a row of zone swatches.</td>
-    <td valign="top"></td>
+    <td valign="top">Two series side by side in each column, with month tabs and a profile footer.</td>
     <td valign="top"></td>
   </tr>
 </table>
@@ -106,6 +106,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Ranked bar** | `RankedBarChart`, `RankedBarChartCard` | Flush bars sorted longest first in a shaded palette, labels inside each bar in a contrasting colour, a list header and a footer note |
 | **Overlapping area** | `OverlappingAreaChart`, `OverlappingAreaChartCard` | Translucent straight-edged areas laid over each other, a coloured header, filter chips, a legend, a profile row and a footer note |
 | **Mirrored area** | `MirroredAreaChart`, `MirroredAreaChartCard` | Smooth translucent layers growing up and down from a shared baseline, a dated header, overlapping zone swatches and a summary value |
+| **Stacked column** | `StackedColumnChart`, `StackedColumnChartCard` | Flush side-by-side stripes per column, a glowing sparkline, selectable tabs, a legend and a tinted profile footer |
 
 More charts are on the way.
 
@@ -515,6 +516,44 @@ MirroredAreaChart(
 ```
 
 `upperSeries` grow up from the baseline and `lowerSeries` hang down from it, each joined with a smooth curve and spread edge to edge. Within each half the last series is drawn in front, so put the tallest first and give the colours some transparency (`UpperColors` and `LowerColors` are ready-made, back to front). Both halves share one scale: the tallest value of any series reaches the edge unless you pass `maxValue`. `MirroredAreaChartDefaults.style(...)` sets the `smoothing` (0 for straight lines), the share of height above the baseline (`upperFraction`) and the baseline colour. In the card, the chart runs to the card's edges; the footer's overlapping `swatches` default to `MirroredAreaChartDefaults.ZoneColors`, and the footer is left out when `summaryLabel`, `summaryValue`, `swatches` and `action` are all empty. Set `swatchBorderColor` in `MirroredAreaChartCardDefaults.style(...)` to your card's background.
+
+### Stacked column
+
+```kotlin
+val series = listOf(
+    BarSeries(label = "Apple", values = listOf(100f, 73f, 55f, 85f, 27f), color = StackedColumnChartDefaults.FirstColor),
+    BarSeries(label = "Banana", values = listOf(100f, 73f, 55f, 85f, 27f), color = StackedColumnChartDefaults.SecondColor),
+)
+```
+
+**Chart card**
+
+```kotlin
+var month by remember { mutableIntStateOf(1) }
+StackedColumnChartCard(
+    title = "Stacked column chart",
+    series = series,
+    tabs = listOf("Nov", "Dec", "Jan", "Feb", "Mar", "Apr"),
+    selectedTab = month,
+    onTabSelected = { month = it },
+    description = "Apples and bananas sold each week, side by side.",
+    name = "Jerome Bell",
+    role = "Marketing Coordinator",
+    avatar = { ChartInitialsAvatar(text = "J") },
+    profileAction = { ChartChatIcon() },
+)
+```
+
+**Chart only**
+
+```kotlin
+StackedColumnChart(
+    series = series,
+    modifier = Modifier.fillMaxWidth().height(136.dp),
+)
+```
+
+Each column holds value `i` of every series as a stripe, side by side, with the first series on the left. Stripes split the column's width and each is as tall as its own value. Columns are spread edge to edge, and the tallest value reaches the top unless you pass `maxValue`. `StackedColumnChartDefaults.style(...)` sets `columnSpacing`, `seriesSpacing` (0 keeps the stripes flush) and `maxColumnWidth`. In the card, the default `action` is a glowing `StackedColumnSparkline`. The tab row is left out when `tabs` is empty, and the profile footer when `avatar`, `name`, `role` and `profileAction` are all `null`. Tabs can only be tapped when `onTabSelected` is given. Tab and footer colours live in `StackedColumnChartCardDefaults.style(...)`. `ChartSparkIcon` also takes `haloColor` and `haloWidth` if you want its glow elsewhere.
 
 ### Styling
 

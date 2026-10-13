@@ -28,6 +28,8 @@ import com.nameisjayant.composecharts.feature.splinearea.SplineAreaScreen
 import com.nameisjayant.composecharts.feature.splinearea.SplineAreaViewModel
 import com.nameisjayant.composecharts.feature.stackedbar.StackedBarScreen
 import com.nameisjayant.composecharts.feature.stackedbar.StackedBarViewModel
+import com.nameisjayant.composecharts.feature.stackedcolumn.StackedColumnScreen
+import com.nameisjayant.composecharts.feature.stackedcolumn.StackedColumnViewModel
 import com.nameisjayant.composecharts.feature.verticalbar.VerticalBarScreen
 import com.nameisjayant.composecharts.feature.verticalbar.VerticalBarViewModel
 import com.nameisjayant.composecharts.ui.CHART_CARD_TAG
@@ -144,6 +146,15 @@ class RecordChartGifs {
         record("mirrored-area", shuffle = "Shuffle data") {
             val state by viewModel.state.collectAsState()
             MirroredAreaScreen(state = state, onIntent = viewModel::onIntent, onBack = {})
+        }
+    }
+
+    @Test
+    fun stackedColumn() {
+        val viewModel = StackedColumnViewModel()
+        record("stacked-column", shuffle = "Shuffle data") {
+            val state by viewModel.state.collectAsState()
+            StackedColumnScreen(state = state, onIntent = viewModel::onIntent, onBack = {})
         }
     }
 

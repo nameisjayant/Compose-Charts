@@ -15,6 +15,8 @@ import com.nameisjayant.charts.bar.RankedBarChart
 import com.nameisjayant.charts.bar.RankedBarChartDefaults
 import com.nameisjayant.charts.bar.StackedBarChart
 import com.nameisjayant.charts.bar.StackedBarChartDefaults
+import com.nameisjayant.charts.bar.StackedColumnChart
+import com.nameisjayant.charts.bar.StackedColumnChartDefaults
 import com.nameisjayant.charts.bar.VerticalBarChart
 import com.nameisjayant.charts.bar.VerticalBarChartDefaults
 import com.nameisjayant.charts.donut.DonutChart
@@ -42,10 +44,12 @@ import com.nameisjayant.composecharts.data.OverlappingAreaSampleData
 import com.nameisjayant.composecharts.data.RankedBarSampleData
 import com.nameisjayant.composecharts.data.SplineAreaSampleData
 import com.nameisjayant.composecharts.data.StackedBarSampleData
+import com.nameisjayant.composecharts.data.StackedColumnSampleData
 import com.nameisjayant.composecharts.data.VerticalBarSampleData
 import com.nameisjayant.composecharts.feature.donut.donutPalette
 import com.nameisjayant.composecharts.feature.doughnut.doughnutPalette
 import com.nameisjayant.composecharts.feature.stackedbar.stackedBarPalette
+import com.nameisjayant.composecharts.feature.stackedcolumn.stackedColumnPalette
 
 /** A live, miniature rendering of a sample's chart for its showcase tile. */
 @Composable
@@ -149,5 +153,17 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
             },
             modifier = modifier.fillMaxSize(),
         )
+        ChartSample.STACKED_COLUMN -> {
+            val palette = stackedColumnPalette()
+            val month = StackedColumnSampleData.DEFAULT_MONTH
+            StackedColumnChart(
+                series = listOf(
+                    BarSeries("", StackedColumnSampleData.apples[month], palette[0]),
+                    BarSeries("", StackedColumnSampleData.bananas[month], palette[1]),
+                ),
+                style = StackedColumnChartDefaults.style(columnSpacing = 6.dp),
+                modifier = modifier.fillMaxSize(),
+            )
+        }
     }
 }

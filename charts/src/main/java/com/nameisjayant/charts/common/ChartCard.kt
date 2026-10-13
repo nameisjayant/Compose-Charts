@@ -298,6 +298,8 @@ public fun ChartBarsIcon(
 /**
  * A hand-drawn looking zigzag through [points] (heights as fractions, 0 at the bottom), spaced
  * evenly from left to right and smoothed: a "trend" glyph.
+ *
+ * A [haloWidth] above 0 draws a soft [haloColor] band behind the line, making it glow.
  */
 @Composable
 public fun ChartSparkIcon(
@@ -306,18 +308,23 @@ public fun ChartSparkIcon(
     size: DpSize = DpSize(width = 30.dp, height = 14.dp),
     strokeWidth: Dp = 2.dp,
     points: List<Float> = listOf(0.1f, 0.65f, 0.3f, 0.75f, 0.25f, 0.85f, 0.45f, 0.7f, 0.95f),
+    haloColor: Color = Color.Transparent,
+    haloWidth: Dp = 0.dp,
 ) {
     Spacer(
         modifier = modifier
             .size(size)
             .drawWithCache {
                 val stroke = strokeWidth.toPx()
-                val inset = stroke / 2
-                val step = if (points.size > 1) (this.size.width - stroke) / (points.size - 1) else 0f
+                val halo = haloWidth.toPx()
+                // Keep the halo, when wider than the line, inside the bounds too.
+                val thickest = maxOf(stroke, halo)
+                val inset = thickest / 2
+                val step = if (points.size > 1) (this.size.width - thickest) / (points.size - 1) else 0f
                 val offsets = points.mapIndexed { index, fraction ->
                     Offset(
                         x = inset + step * index,
-                        y = this.size.height - inset - (this.size.height - stroke) * fraction.coerceIn(0f, 1f),
+                        y = this.size.height - inset - (this.size.height - thickest) * fraction.coerceIn(0f, 1f),
                     )
                 }
                 // Curves through the midpoints between points, bending at each point.
@@ -330,7 +337,11 @@ public fun ChartSparkIcon(
                 }
                 offsets.lastOrNull()?.let { path.lineTo(it.x, it.y) }
                 val style = Stroke(width = stroke, cap = StrokeCap.Round, join = StrokeJoin.Round)
-                onDrawBehind { drawPath(path, color, style = style) }
+                val haloStyle = Stroke(width = halo, cap = StrokeCap.Round, join = StrokeJoin.Round)
+                onDrawBehind {
+                    if (halo > 0f) drawPath(path, haloColor, style = haloStyle)
+                    drawPath(path, color, style = style)
+                }
             },
     )
 }
