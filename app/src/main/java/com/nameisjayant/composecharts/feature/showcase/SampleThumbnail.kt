@@ -26,6 +26,8 @@ import com.nameisjayant.charts.donut.DonutChartDefaults
 import com.nameisjayant.charts.donut.DonutSegment
 import com.nameisjayant.charts.donut.DoughnutChart
 import com.nameisjayant.charts.donut.DoughnutChartDefaults
+import com.nameisjayant.charts.heatmap.HeatmapChart
+import com.nameisjayant.charts.heatmap.HeatmapChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineChart
 import com.nameisjayant.charts.line.AreaRangeLineChartDefaults
 import com.nameisjayant.charts.line.AreaRangeLineSeries
@@ -41,6 +43,7 @@ import com.nameisjayant.composecharts.data.ChartSample
 import com.nameisjayant.composecharts.data.DonutSampleData
 import com.nameisjayant.composecharts.data.DoughnutSampleData
 import com.nameisjayant.composecharts.data.FloatingBarSampleData
+import com.nameisjayant.composecharts.data.HeatmapSampleData
 import com.nameisjayant.composecharts.data.HorizontalBarSampleData
 import com.nameisjayant.composecharts.data.MirroredAreaSampleData
 import com.nameisjayant.composecharts.data.OverlappingAreaSampleData
@@ -52,6 +55,7 @@ import com.nameisjayant.composecharts.data.VerticalBarSampleData
 import com.nameisjayant.composecharts.feature.donut.donutPalette
 import com.nameisjayant.composecharts.feature.doughnut.doughnutPalette
 import com.nameisjayant.composecharts.feature.floatingbar.floatingBars
+import com.nameisjayant.composecharts.feature.heatmap.heatmapPalette
 import com.nameisjayant.composecharts.feature.stackedbar.stackedBarPalette
 import com.nameisjayant.composecharts.feature.stackedcolumn.stackedColumnPalette
 
@@ -184,5 +188,16 @@ fun SampleThumbnail(sampleId: String, modifier: Modifier = Modifier) {
                 modifier = modifier.fillMaxSize(),
             )
         }
+        ChartSample.HEATMAP -> HeatmapChart(
+            values = HeatmapSampleData.values[HeatmapSampleData.DEFAULT_YEAR],
+            colors = heatmapPalette(),
+            style = HeatmapChartDefaults.style(
+                cellSize = 14.dp,
+                cellCornerRadius = 2.dp,
+                minColumnSpacing = 2.dp,
+                rowSpacing = 4.dp,
+            ),
+            modifier = modifier.fillMaxSize(),
+        )
     }
 }

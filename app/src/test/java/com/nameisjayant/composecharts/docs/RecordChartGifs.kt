@@ -18,6 +18,8 @@ import com.nameisjayant.composecharts.feature.doughnut.DoughnutScreen
 import com.nameisjayant.composecharts.feature.doughnut.DoughnutViewModel
 import com.nameisjayant.composecharts.feature.floatingbar.FloatingBarScreen
 import com.nameisjayant.composecharts.feature.floatingbar.FloatingBarViewModel
+import com.nameisjayant.composecharts.feature.heatmap.HeatmapScreen
+import com.nameisjayant.composecharts.feature.heatmap.HeatmapViewModel
 import com.nameisjayant.composecharts.feature.horizontalbar.HorizontalBarScreen
 import com.nameisjayant.composecharts.feature.horizontalbar.HorizontalBarViewModel
 import com.nameisjayant.composecharts.feature.mirroredarea.MirroredAreaScreen
@@ -166,6 +168,15 @@ class RecordChartGifs {
         record("floating-bar", shuffle = "Shuffle data") {
             val state by viewModel.state.collectAsState()
             FloatingBarScreen(state = state, onIntent = viewModel::onIntent, onBack = {})
+        }
+    }
+
+    @Test
+    fun heatmap() {
+        val viewModel = HeatmapViewModel()
+        record("heatmap", shuffle = "Shuffle data") {
+            val state by viewModel.state.collectAsState()
+            HeatmapScreen(state = state, onIntent = viewModel::onIntent, onBack = {})
         }
     }
 

@@ -81,6 +81,21 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
     <td valign="top">Two series side by side in each column, with month tabs and a profile footer.</td>
     <td valign="top">Bars spanning a low to a high value over a dashed grid, with time range chips.</td>
   </tr>
+  <tr>
+    <th width="33%">Heatmap</th>
+    <th width="33%"></th>
+    <th width="33%"></th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/heatmap.gif" width="260" alt="Animated heatmap chart" /></td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top">A contribution grid shaded by activity, with year tabs and a Less to More legend.</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
 </table>
 
 ## Features
@@ -108,6 +123,7 @@ Drop-in chart cards that look great by default, and a styling API that lets you 
 | **Mirrored area** | `MirroredAreaChart`, `MirroredAreaChartCard` | Smooth translucent layers growing up and down from a shared baseline, a dated header, overlapping zone swatches and a summary value |
 | **Stacked column** | `StackedColumnChart`, `StackedColumnChartCard` | Flush side-by-side stripes per column, a glowing sparkline, selectable tabs, a legend and a tinted profile footer |
 | **Floating bar** | `FloatingBarChart`, `FloatingBarChartCard` | Pill-shaped bars from a low to a high value, each in its own colour, dashed grid lines with `8k`-style labels, a caption and time range chips |
+| **Heatmap** | `HeatmapChart`, `HeatmapChartCard`, `HeatmapLegend` | Rounded cells shaded into levels by value, column labels, outlined year tabs, a Less to More legend and a full-width footer button |
 
 More charts are on the way.
 
@@ -592,6 +608,49 @@ FloatingBarChart(
 ```
 
 Each bar spans from its `low` to its `high` value instead of standing on the baseline, and takes its own colour. The axis runs from 0 to `maxValue` in `gridSteps` equal steps (4 by default). Without `maxValue`, the highest value is rounded up so every step is a round number (1, 2, 2.5 or 5 × 10ⁿ). Labels go through `labelFormatter`, which defaults to `FloatingBarChartDefaults.formatValue` (`8000f` becomes `8k`). Bars are spread edge to edge across the grid and grow out from their middles when they animate in. `FloatingBarChartDefaults.style(...)` sets `barWidth`, `barInset`, the grid's colour and dash (`gridDashLength = 0.dp` draws solid lines) and the label style. In the card, the chip row is left out when `ranges` is empty, and chips can only be tapped when `onRangeSelected` is given. Chip colours live in `FloatingBarChartCardDefaults.style(...)`. `ChartSortIcon` is the three-line glyph from the header.
+
+### Heatmap
+
+```kotlin
+// Rows from top to bottom, each from left to right.
+val values = listOf(
+    listOf(0f, 7f, 0f, 12f, 14f, 0f),
+    listOf(0f, 8f, 0f, 0f, 13f, 2f),
+    listOf(3f, 0f, 6f, 2f, 0f, 11f),
+)
+```
+
+**Chart card**
+
+```kotlin
+var year by remember { mutableIntStateOf(0) }
+HeatmapChartCard(
+    title = "Sales per employee per month",
+    subtitle = "263 contributions in the last year",
+    values = values,
+    action = { ChartCircleButton(onClick = {}) { ChartSettingsIcon() } },
+    tabs = listOf("2016", "2017", "2018", "2019"),
+    selectedTab = year,
+    onTabSelected = { year = it },
+    description = "Minim dolor in amet nulla laboris enim dolore consequatt.",
+    columnLabels = listOf("Nov", "Dec", "Jan", "Feb"),
+    note = "Learn how we count contributions",
+    footerText = "Show more activity",
+    onFooterClick = {},
+)
+```
+
+**Chart only**
+
+```kotlin
+HeatmapChart(
+    values = values,
+    columnLabels = listOf("Nov", "Dec", "Jan", "Feb"),
+    modifier = Modifier.fillMaxWidth(),
+)
+```
+
+Each cell takes one of `colors` (four shades from `HeatmapChartDefaults.Colors` by default, emptiest first). A value of 0 or less takes the first colour, and the rest are split evenly between the other colours up to `maxValue`, which defaults to the highest value. Shorter rows are padded with empty cells. Columns are spread edge to edge, and `columnLabels` are spread evenly above them, the first over the first column and the last over the last. Unless you give it a height, the chart is as tall as its rows at `cellSize`; cells shrink when the grid would not fit. Cells pop in column by column, then blend to their new colours when the data changes. `HeatmapChartDefaults.style(...)` sets `cellSize`, `cellCornerRadius`, `minColumnSpacing`, `rowSpacing` and the label style. In the card, the tab row is left out when `tabs` is empty, tabs can only be tapped when `onTabSelected` is given, the legend is left out when `showLegend` is false, and the footer button when `footerText` is `null`. Tab, legend and footer colours live in `HeatmapChartCardDefaults.style(...)`. `HeatmapLegend` can be used on its own.
 
 ### Styling
 

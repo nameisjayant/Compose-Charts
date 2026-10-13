@@ -38,7 +38,7 @@ class ShowcaseViewModelTest {
             listOf(ChartSample.VERTICAL_BAR, ChartSample.AREA_RANGE_LINE, ChartSample.DONUT, ChartSample.DOUGHNUT,
                 ChartSample.SPLINE_AREA, ChartSample.STACKED_BAR, ChartSample.HORIZONTAL_BAR, ChartSample.RANKED_BAR,
                 ChartSample.OVERLAPPING_AREA, ChartSample.MIRRORED_AREA, ChartSample.STACKED_COLUMN,
-                ChartSample.FLOATING_BAR),
+                ChartSample.FLOATING_BAR, ChartSample.HEATMAP),
             viewModel.state.value.samples.map { it.id })
     }
 

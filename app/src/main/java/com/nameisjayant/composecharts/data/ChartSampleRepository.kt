@@ -85,6 +85,12 @@ class ChartSampleRepository @Inject constructor(
                 description = "Bars spanning a low to a high value over a dashed grid, with time range chips",
                 category = "Bar",
             ),
+            ChartSample(
+                id = ChartSample.HEATMAP,
+                title = "Heatmap",
+                description = "A contribution grid shaded by activity, with year tabs and a Less to More legend",
+                category = "Heatmap",
+            ),
         )
     }
 }

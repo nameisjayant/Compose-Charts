@@ -21,5 +21,6 @@ data class ChartSample(
         const val MIRRORED_AREA = "mirrored_area"
         const val STACKED_COLUMN = "stacked_column"
         const val FLOATING_BAR = "floating_bar"
+        const val HEATMAP = "heatmap"
     }
 }
